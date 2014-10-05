@@ -1,0 +1,17 @@
+{
+    "name": "theodorejb/php-strict-cast",
+    "description": "Safely cast values to int, float, or string",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Theodore Brown",
+            "email": "theodorejb@outlook.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "~4.3"
+    },
+    "autoload": {
+        "files": ["lib/strictCast.php"]
+    }
+}
