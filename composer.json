@@ -1,6 +1,6 @@
 {
-    "name": "theodorejb/php-strict-cast",
-    "description": "Safely cast values to int, float, or string",
+    "name": "theodorejb/polycast",
+    "description": "Safely cast values to float, int, or string in PHP",
     "license": "MIT",
     "authors": [
         {
@@ -12,6 +12,6 @@
         "phpunit/phpunit": "~4.3"
     },
     "autoload": {
-        "files": ["lib/strictCast.php"]
+        "files": ["lib/PolyCast.php"]
     }
 }

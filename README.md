@@ -1,6 +1,6 @@
-# PHP Strict Cast
+# PolyCast
 
-[![Build Status](https://travis-ci.org/theodorejb/php-strict-cast.svg)](https://travis-ci.org/theodorejb/php-strict-cast)
+[![Build Status](https://travis-ci.org/theodorejb/PolyCast.svg?branch=master)](https://travis-ci.org/theodorejb/PolyCast)
 
 Adds `toFloat`, `toInt`, and `toString` functions for safe, strict casting. The functions currently return `null` if a value cannot be safely cast, but this will likely be changed to `false`.
 
