@@ -95,3 +95,25 @@ function toInt($val, $base = 10)
 
     return null;
 }
+
+/**
+ * Returns the value as a string, or null if it cannot be safely cast
+ * @param mixed $val
+ * @return string
+ */
+function toString($val)
+{
+    if (is_string($val)) {
+        return $val;
+    }
+
+    if (is_int($val) || is_float($val)) {
+        return (string) $val;
+    }
+
+    if (is_object($val) && method_exists($val, '__toString')) {
+        return $val->__toString();
+    }
+
+    return null;
+}
