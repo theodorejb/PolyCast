@@ -1,5 +1,7 @@
 # PHP Strict Cast
 
+[![Build Status](https://travis-ci.org/theodorejb/php-strict-cast.svg)](https://travis-ci.org/theodorejb/php-strict-cast)
+
 Adds `toFloat`, `toInt`, and `toString` functions for safe, strict casting. The functions currently return `null` if a value cannot be safely cast, but this will likely be changed to `false`.
 
 Based on https://github.com/TazeTSchnitzel/php-src/compare/php:master...TazeTSchnitzel:safe_casts.
