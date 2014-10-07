@@ -52,4 +52,10 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_int(NAN));
         $this->assertFalse(to_int(PHP_INT_MAX * 2));
     }
+
+    public function testExponents()
+    {
+        $this->assertFalse(to_int("75e-5"));
+        $this->assertFalse(to_int("31e+7"));
+    }
 }
