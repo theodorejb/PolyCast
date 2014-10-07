@@ -25,20 +25,6 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_int([]));
     }
 
-    public function testBases()
-    {
-        $this->assertSame(8, to_int("010", 0));    // base detect octal
-        $this->assertSame(10, to_int("010", 10));  // not octal
-        $this->assertSame(10, to_int("010"));      // not octal
-        $this->assertSame(16, to_int("0x10", 0));  // base detect hex
-        $this->assertSame(16, to_int("0x10", 16)); // hex
-        $this->assertFalse(to_int("0x10", 10));     // not hex
-        $this->assertFalse(to_int("0x10"));         // not hex
-        $this->assertFalse(to_int("123AyZ", 35));   // z is only in base 36
-        $this->assertSame(63979595, to_int("123ayz", 36));
-        $this->assertSame(63979595, to_int("123AyZ", 36));
-    }
-
     public function testTruncation()
     {
         $this->assertSame(1, to_int(1.5));
@@ -48,9 +34,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
     public function testRejectLeadingTrailingChars()
     {
         $this->assertFalse(to_int("10abc"));
-        $this->assertFalse(to_int("123abcxyz", 13));
         $this->assertFalse(to_int("abc10"));
-        $this->assertFalse(to_int("abcxyz123", 13));
     }
 
     public function testAcceptLeadingTrailingWhitespace()
