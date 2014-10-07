@@ -1,5 +1,11 @@
 <?php
 
+// conditionally define PHP_INT_MIN since PHP 5.x doesn't
+// include it and it's needed to validate integer casts
+if (!defined("PHP_INT_MIN")) {
+    define("PHP_INT_MIN", ~PHP_INT_MAX);
+}
+
 /**
  * Returns the value as an int, or false if it cannot be safely cast
  * @param mixed $val
@@ -11,9 +17,7 @@ function to_int($val)
         case "integer":
             return $val;
         case "double":
-            $PHP_INT_MIN = ~PHP_INT_MAX; // const isn't in PHP 5.x
-
-            if (!is_infinite($val) && !is_nan($val) && $val >= $PHP_INT_MIN) {
+            if (!is_infinite($val) && !is_nan($val) && $val >= PHP_INT_MIN) {
                 // due to rounding issues, on 64-bit platforms
                 // the float must be less than PHP_INT_MAX
 

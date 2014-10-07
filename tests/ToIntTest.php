@@ -4,8 +4,6 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 {
     public function testShouldPass()
     {
-        $PHP_INT_MIN = ~PHP_INT_MAX; // const isn't in PHP 5.x
-
         $this->assertSame(0, to_int("0"));
         $this->assertSame(0, to_int(0));
         $this->assertSame(0, to_int(0.0));
@@ -15,8 +13,8 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(PHP_INT_MAX, to_int((string) PHP_INT_MAX));
         $this->assertSame(PHP_INT_MAX, to_int(PHP_INT_MAX));
-        $this->assertSame($PHP_INT_MIN, to_int((string) $PHP_INT_MIN));
-        $this->assertSame($PHP_INT_MIN, to_int($PHP_INT_MIN));
+        $this->assertSame(PHP_INT_MIN, to_int((string) PHP_INT_MIN));
+        $this->assertSame(PHP_INT_MIN, to_int(PHP_INT_MIN));
     }
 
     public function testDisallowedTypes()
