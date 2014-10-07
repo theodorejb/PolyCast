@@ -2,60 +2,66 @@
 
 [![Build Status](https://travis-ci.org/theodorejb/PolyCast.svg?branch=master)](https://travis-ci.org/theodorejb/PolyCast)
 
-Adds `toFloat`, `toInt`, and `toString` functions for safe, strict casting. The functions currently return `null` if a value cannot be safely cast, but this will likely be changed to `false`.
+Adds `to_int`, `to_float`, and `to_string` functions for safe, strict casting. The functions return `false` if a value cannot be safely cast.
 
 Based on https://github.com/TazeTSchnitzel/php-src/compare/php:master...TazeTSchnitzel:safe_casts.
 
 ## Examples
 
 ```php
-toFloat("0");     // 0.0
-toFloat(0);       // 0.0
-toFloat(0.0);     // 0.0
-toFloat("10");    // 10.0
-toFloat(10);      // 10.0
-toFloat(10.0);    // 10.0
-toFloat(1.5);     // 1.5
-toFloat("1.5");   // 1.5
-toFloat("75e-5"); // 0.00075
-toFloat(" 100 "); // 100.0
+to_int("0");     // 0
+to_int(0);       // 0
+to_int(0.0);     // 0
+to_int("10");    // 10
+to_int(10);      // 10
+to_int(10.0);    // 10
+to_int(1.5);     // 1
+to_int(" 100 "); // 100
 
-toFloat(null);           // null
-toFloat(true);           // null
-toFloat(false);          // null
-toFloat(new stdClass()); // null
-toFloat($resource);      // null
-toFloat([]);             // null
-toFloat("10abc");        // null
+to_int("10abc");        // false
+to_int("31e+7");        // false
+to_int("1.5");          // false
+to_int(null);           // false
+to_int(true);           // false
+to_int(false);          // false
+to_int(INF);            // false
+to_int(NAN);            // false
+to_int(new stdClass()); // false
+to_int($resource);      // false
+to_int([]);             // false
 
-toInt("0");  // 0
-toInt(0);    // 0
-toInt(0.0);  // 0
-toInt("10"); // 10
-toInt(10);   // 10
-toInt(10.0); // 10
-toInt(1.5);  // 1
+to_float("0");     // 0.0
+to_float(0);       // 0.0
+to_float(0.0);     // 0.0
+to_float("10");    // 10.0
+to_float(10);      // 10.0
+to_float(10.0);    // 10.0
+to_float(1.5);     // 1.5
+to_float("1.5");   // 1.5
+to_float(INF);     // INF
+to_float(NAN);     // NAN
+to_float("75e-5"); // 0.00075
+to_float(" 100 "); // 100.0
 
-toInt("75e-5");        // null
-toInt("1.5");          // null
-toInt(null);           // null
-toInt(true);           // null
-toInt(false);          // null
-toInt(new stdClass()); // null
-toInt($resource);      // null
-toInt([]);             // null
+to_float(null);           // false
+to_float(true);           // false
+to_float(false);          // false
+to_float(new stdClass()); // false
+to_float($resource);      // false
+to_float([]);             // false
+to_float("10abc");        // false
 
-toString("foobar"); // "foobar"
-toString(123);      // "123"
-toString(123.45);   // "123.45"
-toString(INF);      // "INF"
-toString(NAN);      // "NAN"
+to_string("foobar"); // "foobar"
+to_string(123);      // "123"
+to_string(123.45);   // "123.45"
+to_string(INF);      // "INF"
+to_string(NAN);      // "NAN"
 
-toString(null);      // null
-toString(true);      // null
-toString(false);     // null
-toString([]);        // null
-toString($resource); // null
+to_string(null);      // false
+to_string(true);      // false
+to_string(false);     // false
+to_string([]);        // false
+to_string($resource); // false
 
 class NotStringable {}
 class Stringable {
@@ -64,9 +70,9 @@ class Stringable {
     }
 }
 
-toString(new stdClass());      // null
-toString(new NotStringable()); // null
-toString(new Stringable());    // "foobar"
+to_string(new stdClass());      // false
+to_string(new NotStringable()); // false
+to_string(new Stringable());    // "foobar"
 ```
 
 ## Author
