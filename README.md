@@ -6,6 +6,20 @@ Adds `to_int`, `to_float`, and `to_string` functions for safe, strict casting. T
 
 Based on https://github.com/TazeTSchnitzel/php-src/compare/php:master...TazeTSchnitzel:safe_casts.
 
+## Installation
+
+To install via [Composer](https://getcomposer.org/), add the following to the composer.json file in your project root:
+
+```json
+{
+    "require": {
+        "theodorejb/polycast": "~0.2"
+    }
+}
+```
+
+Then run `composer install` and require `vendor/autoload.php` in your application's bootstrap file.
+
 ## Examples
 
 ```php
