@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Returns the value as a float, or null if it cannot be safely cast
+ * Returns the value as a float, or false if it cannot be safely cast
  * @param mixed $val
  * @return float
  */
 function to_float($val)
 {
     if (is_bool($val)) {
-        return null;
+        return false;
     }
 
     if (is_float($val)) {
@@ -19,17 +19,11 @@ function to_float($val)
         $val = trim($val, " \t\n\r\v\f");
     }
 
-    $float = filter_var($val, FILTER_VALIDATE_FLOAT);
-
-    if ($float === false) {
-        return null;
-    }
-
-    return $float;
+    return filter_var($val, FILTER_VALIDATE_FLOAT);
 }
 
 /**
- * Returns the value as an int, or null if it cannot be safely cast
+ * Returns the value as an int, or false if it cannot be safely cast
  * @param mixed $val
  * @param int $base Has no effect unless $val is a string
  * @return int
@@ -38,7 +32,7 @@ function to_int($val, $base = 10)
 {
     // don't allow bool, object, resource, or array
     if (!in_array(gettype($val), ["integer", "double", "string"], true)) {
-        return null;
+        return false;
     }
 
     if (is_int($val)) {
@@ -87,17 +81,17 @@ function to_int($val, $base = 10)
         $allowedChars = implode("", array_slice($chars, 0, $base));
 
         if (!preg_match("/^[$allowedChars]+$/", $val)) {
-            return null;
+            return false;
         }
 
         return intval($val, $base);
     }
 
-    return null;
+    return false;
 }
 
 /**
- * Returns the value as a string, or null if it cannot be safely cast
+ * Returns the value as a string, or false if it cannot be safely cast
  * @param mixed $val
  * @return string
  */
@@ -115,5 +109,5 @@ function to_string($val)
         return $val->__toString();
     }
 
-    return null;
+    return false;
 }

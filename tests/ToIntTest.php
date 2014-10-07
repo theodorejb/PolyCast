@@ -17,12 +17,12 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     public function testDisallowedTypes()
     {
-        $this->assertNull(to_int(null));
-        $this->assertNull(to_int(true));
-        $this->assertNull(to_int(false));
-        $this->assertNull(to_int(new stdClass()));
-        $this->assertNull(to_int(fopen("data:text/html,foobar", "r")));
-        $this->assertNull(to_int([]));
+        $this->assertFalse(to_int(null));
+        $this->assertFalse(to_int(true));
+        $this->assertFalse(to_int(false));
+        $this->assertFalse(to_int(new stdClass()));
+        $this->assertFalse(to_int(fopen("data:text/html,foobar", "r")));
+        $this->assertFalse(to_int([]));
     }
 
     public function testBases()
@@ -32,9 +32,9 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertSame(10, to_int("010"));      // not octal
         $this->assertSame(16, to_int("0x10", 0));  // base detect hex
         $this->assertSame(16, to_int("0x10", 16)); // hex
-        $this->assertNull(to_int("0x10", 10));     // not hex
-        $this->assertNull(to_int("0x10"));         // not hex
-        $this->assertNull(to_int("123AyZ", 35));   // z is only in base 36
+        $this->assertFalse(to_int("0x10", 10));     // not hex
+        $this->assertFalse(to_int("0x10"));         // not hex
+        $this->assertFalse(to_int("123AyZ", 35));   // z is only in base 36
         $this->assertSame(63979595, to_int("123ayz", 36));
         $this->assertSame(63979595, to_int("123AyZ", 36));
     }
@@ -42,15 +42,15 @@ class ToIntTest extends PHPUnit_Framework_TestCase
     public function testTruncation()
     {
         $this->assertSame(1, to_int(1.5));
-        $this->assertNull(to_int("1.5"));
+        $this->assertFalse(to_int("1.5"));
     }
 
     public function testRejectLeadingTrailingChars()
     {
-        $this->assertNull(to_int("10abc"));
-        $this->assertNull(to_int("123abcxyz", 13));
-        $this->assertNull(to_int("abc10"));
-        $this->assertNull(to_int("abcxyz123", 13));
+        $this->assertFalse(to_int("10abc"));
+        $this->assertFalse(to_int("123abcxyz", 13));
+        $this->assertFalse(to_int("abc10"));
+        $this->assertFalse(to_int("abcxyz123", 13));
     }
 
     public function testAcceptLeadingTrailingWhitespace()
@@ -63,9 +63,9 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     public function testOverflowNanInf()
     {
-        $this->assertNull(to_int(INF));
-        $this->assertNull(to_int(-INF));
-        $this->assertNull(to_int(NAN));
-        $this->assertNull(to_int(PHP_INT_MAX * 2));
+        $this->assertFalse(to_int(INF));
+        $this->assertFalse(to_int(-INF));
+        $this->assertFalse(to_int(NAN));
+        $this->assertFalse(to_int(PHP_INT_MAX * 2));
     }
 }

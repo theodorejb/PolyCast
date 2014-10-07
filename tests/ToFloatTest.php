@@ -20,18 +20,18 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
 
     public function testDisallowedTypes()
     {
-        $this->assertNull(to_float(null));
-        $this->assertNull(to_float(true));
-        $this->assertNull(to_float(false));
-        $this->assertNull(to_float(new stdClass()));
-        $this->assertNull(to_float(fopen("data:text/html,foobar", "r")));
-        $this->assertNull(to_float([]));
+        $this->assertFalse(to_float(null));
+        $this->assertFalse(to_float(true));
+        $this->assertFalse(to_float(false));
+        $this->assertFalse(to_float(new stdClass()));
+        $this->assertFalse(to_float(fopen("data:text/html,foobar", "r")));
+        $this->assertFalse(to_float([]));
     }
 
     public function testRejectLeadingTrailingChars()
     {
-        $this->assertNull(to_float("10abc"));
-        $this->assertNull(to_float("abc10"));
+        $this->assertFalse(to_float("10abc"));
+        $this->assertFalse(to_float("abc10"));
     }
 
     public function testAcceptLeadingTrailingWhitespace()
