@@ -17,8 +17,7 @@ function to_int($val)
                 return false;
             }
         case "string":
-            // lowercase and trim whitespace
-            $val = strtolower(trim($val, " \t\n\r\v\f"));
+            $val = trim($val, " \t\n\r\v\f"); // trim whitespace
             return filter_var($val, FILTER_VALIDATE_INT);
         default:
             return false;
