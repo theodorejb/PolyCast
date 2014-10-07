@@ -31,19 +31,17 @@ function to_int($val)
  */
 function to_float($val)
 {
-    if (is_bool($val)) {
-        return false;
+    switch (gettype($val)) {
+        case "double":
+            return $val;
+        case "integer":
+            return (float) $val;
+        case "string":
+            $val = trim($val, " \t\n\r\v\f"); // trim whitespace
+            return filter_var($val, FILTER_VALIDATE_FLOAT);
+        default:
+            return false;
     }
-
-    if (is_float($val)) {
-        return $val;
-    }
-
-    if (is_string($val)) {
-        $val = trim($val, " \t\n\r\v\f");
-    }
-
-    return filter_var($val, FILTER_VALIDATE_FLOAT);
 }
 
 /**
@@ -53,17 +51,19 @@ function to_float($val)
  */
 function to_string($val)
 {
-    if (is_string($val)) {
-        return $val;
+    switch (gettype($val)) {
+        case "string":
+            return $val;
+        case "integer":
+        case "double":
+            return (string) $val;
+        case "object":
+            if (method_exists($val, "__toString")) {
+                return $val->__toString();
+            } else {
+                return false;
+            }
+        default:
+            return false;
     }
-
-    if (is_int($val) || is_float($val)) {
-        return (string) $val;
-    }
-
-    if (is_object($val) && method_exists($val, '__toString')) {
-        return $val->__toString();
-    }
-
-    return false;
 }
