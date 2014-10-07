@@ -1,28 +1,6 @@
 <?php
 
 /**
- * Returns the value as a float, or false if it cannot be safely cast
- * @param mixed $val
- * @return float
- */
-function to_float($val)
-{
-    if (is_bool($val)) {
-        return false;
-    }
-
-    if (is_float($val)) {
-        return $val;
-    }
-
-    if (is_string($val)) {
-        $val = trim($val, " \t\n\r\v\f");
-    }
-
-    return filter_var($val, FILTER_VALIDATE_FLOAT);
-}
-
-/**
  * Returns the value as an int, or false if it cannot be safely cast
  * @param mixed $val
  * @return int
@@ -45,6 +23,28 @@ function to_int($val)
         default:
             return false;
     }
+}
+
+/**
+ * Returns the value as a float, or false if it cannot be safely cast
+ * @param mixed $val
+ * @return float
+ */
+function to_float($val)
+{
+    if (is_bool($val)) {
+        return false;
+    }
+
+    if (is_float($val)) {
+        return $val;
+    }
+
+    if (is_string($val)) {
+        $val = trim($val, " \t\n\r\v\f");
+    }
+
+    return filter_var($val, FILTER_VALIDATE_FLOAT);
 }
 
 /**

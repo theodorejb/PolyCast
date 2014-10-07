@@ -1,6 +1,6 @@
 {
     "name": "theodorejb/polycast",
-    "description": "Safely cast values to float, int, or string in PHP",
+    "description": "Safely cast values to int, float, or string in PHP",
     "license": "MIT",
     "authors": [
         {
