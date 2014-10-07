@@ -5,7 +5,7 @@
  * @param mixed $val
  * @return float
  */
-function toFloat($val)
+function to_float($val)
 {
     if (is_bool($val)) {
         return null;
@@ -34,7 +34,7 @@ function toFloat($val)
  * @param int $base Has no effect unless $val is a string
  * @return int
  */
-function toInt($val, $base = 10)
+function to_int($val, $base = 10)
 {
     // don't allow bool, object, resource, or array
     if (!in_array(gettype($val), ["integer", "double", "string"], true)) {
@@ -101,7 +101,7 @@ function toInt($val, $base = 10)
  * @param mixed $val
  * @return string
  */
-function toString($val)
+function to_string($val)
 {
     if (is_string($val)) {
         return $val;
