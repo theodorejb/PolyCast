@@ -27,10 +27,12 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_int([]));
     }
 
-    public function testTruncation()
+    public function testNonIntegral()
     {
-        $this->assertSame(1, to_int(1.5));
+        $this->assertFalse(to_int(1.5));
         $this->assertFalse(to_int("1.5"));
+        $this->assertFalse(to_int("0.0"));
+        $this->assertFalse(to_int("10.0"));
     }
 
     public function testRejectLeadingTrailingChars()

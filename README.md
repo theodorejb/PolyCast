@@ -38,10 +38,11 @@ to_int(0.0);     // 0
 to_int("10");    // 10
 to_int(10);      // 10
 to_int(10.0);    // 10
-to_int(1.5);     // 1
 to_int(" 100 "); // 100
 to_int("10abc");        // false
 to_int("31e+7");        // false
+to_int("10.0");         // false
+to_int(1.5);            // false
 to_int("1.5");          // false
 to_int(INF);            // false
 to_int(NAN);            // false
