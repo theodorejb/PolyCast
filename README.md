@@ -13,7 +13,7 @@ To install via [Composer](https://getcomposer.org/), add the following to the co
 ```json
 {
     "require": {
-        "theodorejb/polycast": "~0.2"
+        "theodorejb/polycast": "~0.3"
     }
 }
 ```
