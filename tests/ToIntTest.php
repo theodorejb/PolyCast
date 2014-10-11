@@ -29,10 +29,12 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     public function testNonIntegral()
     {
-        $this->assertFalse(to_int(1.5));
-        $this->assertFalse(to_int("1.5"));
         $this->assertFalse(to_int("0.0"));
         $this->assertFalse(to_int("10.0"));
+        $this->assertFalse(to_int("75e-5"));
+        $this->assertFalse(to_int("31e+7"));
+        $this->assertFalse(to_int(1.5));
+        $this->assertFalse(to_int("1.5"));
     }
 
     public function testRejectLeadingTrailingChars()
@@ -56,11 +58,5 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_int(NAN));
         $this->assertFalse(to_int(PHP_INT_MAX * 2));
         $this->assertFalse(to_int(PHP_INT_MIN * 2));
-    }
-
-    public function testExponents()
-    {
-        $this->assertFalse(to_int("75e-5"));
-        $this->assertFalse(to_int("31e+7"));
     }
 }

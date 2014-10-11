@@ -8,6 +8,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertSame(0.0, to_float(0));
         $this->assertSame(0.0, to_float(0.0));
         $this->assertSame(10.0, to_float("10"));
+        $this->assertSame(10.0, to_float("10.0"));
         $this->assertSame(10.0, to_float(10));
         $this->assertSame(10.0, to_float(10.0));
         $this->assertSame(1.5, to_float(1.5));
@@ -50,8 +51,8 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertSame(INF, to_float(INF));
         $this->assertSame(-INF, to_float(-INF));
         $this->assertTrue(is_nan(to_float(NAN)));
-        $this->assertSame(PHP_INT_MAX * 2, to_float(PHP_INT_MAX * 2));
-        $this->assertSame(PHP_INT_MIN * 2, to_float(PHP_INT_MIN * 2));
+        $this->assertSame((float) (PHP_INT_MAX * 2), to_float(PHP_INT_MAX * 2));
+        $this->assertSame((float) (PHP_INT_MIN * 2), to_float(PHP_INT_MIN * 2));
     }
 
     public function testExponents()
