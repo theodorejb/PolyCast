@@ -41,14 +41,8 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_float("10abc"));
         $this->assertFalse(to_float("abc10"));
         $this->assertFalse(to_float("foobar"));
-    }
-
-    public function testAcceptLeadingTrailingWhitespace()
-    {
-        $this->assertSame(100.0, to_float("   100    "));
-        $this->assertSame(78.0, to_float("\n\t\v\r\f   78 \n \t\v\r\f   \n"));
-        $this->assertSame(78.0, to_float("\n\t\v\r\f78"));
-        $this->assertSame(78.0, to_float("78\n\t\v\r\f"));
+        $this->assertFalse(to_float("  10  "));
+        $this->assertFalse(to_float("\n\t\v\r78"));
     }
 
     public function testOverflowNanInf()

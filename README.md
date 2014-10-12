@@ -35,7 +35,6 @@ resource   | `false`    | `false`      | `false`
 `stdClass` | `false`    | `false`      | `false`
 "10"       | 10         | 10.0         | "10"
 "-10"      | -10        | -10.0        | "-10"
-"   10   " | 10         | 10.0         | "   10   "
 10.0       | 10         | 10.0         | "10"
 "10.0"     | `false`    | 10.0         | "10.0"
 1.5        | `false`    | 1.5          | "1.5"
@@ -44,6 +43,7 @@ resource   | `false`    | `false`      | `false`
 "75e-5"    | `false`    | 0.00075      | "75e-5"
 `INF`      | `false`    | `INF`        | "INF"
 `NAN`      | `false`    | `NAN`        | "NAN"
+"   10   " | `false`    | `false`      | "   10   "
 "10abc"    | `false`    | `false`      | "10abc"
 "abc10"    | `false`    | `false`      | "abc10"
 

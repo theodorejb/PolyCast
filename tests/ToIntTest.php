@@ -46,14 +46,8 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_int("10abc"));
         $this->assertFalse(to_int("abc10"));
         $this->assertFalse(to_int("foobar"));
-    }
-
-    public function testAcceptLeadingTrailingWhitespace()
-    {
-        $this->assertSame(100, to_int("   100    "));
-        $this->assertSame(78, to_int("\n\t\v\r\f   78 \n \t\v\r\f   \n"));
-        $this->assertSame(78, to_int("\n\t\v\r\f78"));
-        $this->assertSame(78, to_int("78\n\t\v\r\f"));
+        $this->assertFalse(to_int("  10  "));
+        $this->assertFalse(to_int("\n\t\v\r78"));
     }
 
     public function testOverflowNanInf()

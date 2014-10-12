@@ -13,7 +13,10 @@ function to_int($val)
         case "double":
             return ($val === (float) (int) $val) ? (int) $val : false;
         case "string":
-            $val = trim($val, " \t\n\r\v\f"); // trim whitespace
+            if (!preg_match("/^(\-|\+)?\d+$/", $val)) {
+                return false; // reject leading/trailing whitespace
+            }
+
             return filter_var($val, FILTER_VALIDATE_INT);
         default:
             return false;
@@ -33,8 +36,11 @@ function to_float($val)
         case "integer":
             return (float) $val;
         case "string":
-            $val = trim($val, " \t\n\r\v\f"); // trim whitespace
-            return filter_var($val, FILTER_VALIDATE_FLOAT);
+            if (!is_numeric($val) || preg_match("/^\s/", $val)) {
+                return false;
+            }
+
+            return (float) $val;
         default:
             return false;
     }
