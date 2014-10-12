@@ -11,6 +11,10 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertSame(10.0, to_float("10.0"));
         $this->assertSame(10.0, to_float(10));
         $this->assertSame(10.0, to_float(10.0));
+        $this->assertSame(-10.0, to_float("-10"));
+        $this->assertSame(-10.0, to_float("-10.0"));
+        $this->assertSame(-10.0, to_float(-10));
+        $this->assertSame(-10.0, to_float(-10.0));
         $this->assertSame(1.5, to_float(1.5));
         $this->assertSame(1.5, to_float("1.5"));
 
@@ -36,6 +40,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse(to_float("10abc"));
         $this->assertFalse(to_float("abc10"));
+        $this->assertFalse(to_float("foobar"));
     }
 
     public function testAcceptLeadingTrailingWhitespace()

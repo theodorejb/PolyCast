@@ -10,6 +10,9 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertSame(10, to_int("10"));
         $this->assertSame(10, to_int(10));
         $this->assertSame(10, to_int(10.0));
+        $this->assertSame(-10, to_int("-10"));
+        $this->assertSame(-10, to_int(-10));
+        $this->assertSame(-10, to_int(-10.0));
 
         $this->assertSame(PHP_INT_MAX, to_int((string) PHP_INT_MAX));
         $this->assertSame(PHP_INT_MAX, to_int(PHP_INT_MAX));
@@ -41,6 +44,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse(to_int("10abc"));
         $this->assertFalse(to_int("abc10"));
+        $this->assertFalse(to_int("foobar"));
     }
 
     public function testAcceptLeadingTrailingWhitespace()
