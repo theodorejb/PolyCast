@@ -8,6 +8,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertSame(0, to_int(0));
         $this->assertSame(0, to_int(0.0));
         $this->assertSame(10, to_int("10"));
+        $this->assertSame(10, to_int("+10"));
         $this->assertSame(10, to_int(10));
         $this->assertSame(10, to_int(10.0));
         $this->assertSame(-10, to_int("-10"));
@@ -60,6 +61,8 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_int(INF));
         $this->assertFalse(to_int(-INF));
         $this->assertFalse(to_int(NAN));
+        $this->assertFalse(to_int((string) PHP_INT_MAX . "0"));
+        $this->assertFalse(to_int((string) PHP_INT_MIN . "0"));
         $this->assertFalse(to_int(PHP_INT_MAX * 2));
         $this->assertFalse(to_int(PHP_INT_MIN * 2));
     }
