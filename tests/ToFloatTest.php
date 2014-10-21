@@ -42,7 +42,10 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_float("abc10"));
         $this->assertFalse(to_float("foobar"));
         $this->assertFalse(to_float("  10  "));
+        $this->assertFalse(to_float(("\n\t\v\r\f   78 \n \t\v\r\f   \n")));
         $this->assertFalse(to_float("\n\t\v\r78"));
+        $this->assertFalse(to_float("\n\t\v\r\f78"));
+        $this->assertFalse(to_float("78\n\t\v\r\f"));
     }
 
     public function testOverflowNanInf()

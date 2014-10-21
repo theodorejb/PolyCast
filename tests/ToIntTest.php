@@ -47,7 +47,10 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_int("abc10"));
         $this->assertFalse(to_int("foobar"));
         $this->assertFalse(to_int("  10  "));
+        $this->assertFalse(to_int("\n\t\v\r\f   78 \n \t\v\r\f   \n"));
         $this->assertFalse(to_int("\n\t\v\r78"));
+        $this->assertFalse(to_int("\n\t\v\r\f78"));
+        $this->assertFalse(to_int("78\n\t\v\r\f"));
     }
 
     public function testOverflowNanInf()
