@@ -7,6 +7,9 @@ The functions return `false` if a value cannot be safely cast.
 
 Based on https://github.com/TazeTSchnitzel/php-src/compare/php:master...TazeTSchnitzel:safe_casts.
 
+An RFC proposing inclusion in PHP 7 was opened for discussion on 2014-10-20:
+https://wiki.php.net/rfc/safe_cast.
+
 ## Installation
 
 To install via [Composer](https://getcomposer.org/),
