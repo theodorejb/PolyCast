@@ -1,5 +1,11 @@
 <?php
 
+// conditionally define PHP_INT_MIN since PHP 5.x doesn't
+// include it and it's necessary for validating integers.
+if (!defined("PHP_INT_MIN")) {
+    define("PHP_INT_MIN", ~PHP_INT_MAX);
+}
+
 /**
  * Returns the value as an int, or false if it cannot be safely cast
  * @param mixed $val
@@ -17,7 +23,11 @@ function to_int($val)
                 return false; // reject leading/trailing whitespace
             }
 
-            return filter_var($val, FILTER_VALIDATE_INT);
+            if ((float) $val > PHP_INT_MAX || (float) $val < PHP_INT_MIN) {
+                return false; // reject overflows
+            }
+
+            return (int) $val;
         default:
             return false;
     }
