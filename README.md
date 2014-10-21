@@ -5,8 +5,7 @@
 Adds `to_int`, `to_float`, and `to_string` functions for safe, strict casting.
 The functions return `false` if a value cannot be safely cast.
 
-Based on https://github.com/TazeTSchnitzel/php-src/compare/php:master...TazeTSchnitzel:safe_casts.
-
+Based on https://github.com/php/php-src/pull/874.
 An RFC proposing inclusion in PHP 7 was opened for discussion on 2014-10-20:
 https://wiki.php.net/rfc/safe_cast.
 
