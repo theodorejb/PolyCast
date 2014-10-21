@@ -8,13 +8,11 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertSame(0.0, to_float(0));
         $this->assertSame(0.0, to_float(0.0));
         $this->assertSame(10.0, to_float("10"));
+        $this->assertSame(10.0, to_float("010"));
+        $this->assertSame(10.0, to_float("+10"));
         $this->assertSame(10.0, to_float("10.0"));
         $this->assertSame(10.0, to_float(10));
         $this->assertSame(10.0, to_float(10.0));
-        $this->assertSame(-10.0, to_float("-10"));
-        $this->assertSame(-10.0, to_float("-10.0"));
-        $this->assertSame(-10.0, to_float(-10));
-        $this->assertSame(-10.0, to_float(-10.0));
         $this->assertSame(1.5, to_float(1.5));
         $this->assertSame(1.5, to_float("1.5"));
 
@@ -28,6 +26,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
 
     public function testDisallowedTypes()
     {
+        $this->assertFalse(to_float("0x10"));
         $this->assertFalse(to_float(null));
         $this->assertFalse(to_float(true));
         $this->assertFalse(to_float(false));
@@ -41,7 +40,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(to_float("10abc"));
         $this->assertFalse(to_float("abc10"));
         $this->assertFalse(to_float("foobar"));
-        $this->assertFalse(to_float("  10  "));
+        $this->assertFalse(to_float("   100    "));
         $this->assertFalse(to_float(("\n\t\v\r\f   78 \n \t\v\r\f   \n")));
         $this->assertFalse(to_float("\n\t\v\r78"));
         $this->assertFalse(to_float("\n\t\v\r\f78"));
@@ -55,6 +54,8 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_nan(to_float(NAN)));
         $this->assertSame((float) (PHP_INT_MAX * 2), to_float(PHP_INT_MAX * 2));
         $this->assertSame((float) (PHP_INT_MIN * 2), to_float(PHP_INT_MIN * 2));
+        $this->assertSame((string) (float) (PHP_INT_MAX * 2), (string) to_float((string) (PHP_INT_MAX * 2)));
+        $this->assertSame((string) (float) (PHP_INT_MIN * 2), (string) to_float((string) (PHP_INT_MIN * 2)));
     }
 
     public function testExponents()

@@ -5,12 +5,8 @@ class ToStringTest extends PHPUnit_Framework_TestCase
     public function testShouldPass()
     {
         $this->assertSame("foobar", to_string("foobar"));
-        $this->assertSame("10", to_string(10));
-        $this->assertSame("10", to_string(10.0));
-        $this->assertSame("-10", to_string(-10));
-        $this->assertSame("-10", to_string(-10.0));
-        $this->assertSame("1.5", to_string(1.5));
-        $this->assertSame("75e-5", to_string("75e-5"));
+        $this->assertSame("123", to_string(123));
+        $this->assertSame("123.45", to_string(123.45));
         $this->assertSame("INF", to_string(INF));
         $this->assertSame("-INF", to_string(-INF));
         $this->assertSame("NAN", to_string(NAN));

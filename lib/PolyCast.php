@@ -19,7 +19,7 @@ function to_int($val)
         case "double":
             return ($val === (float) (int) $val) ? (int) $val : false;
         case "string":
-            if (!preg_match("/^(\-|\+)?\d+$/", $val)) {
+            if (!preg_match("/^[+-]?[0-9]+$/", $val)) {
                 return false; // reject leading/trailing whitespace
             }
 
@@ -46,11 +46,11 @@ function to_float($val)
         case "integer":
             return (float) $val;
         case "string":
-            if (!is_numeric($val) || preg_match("/^\s/", $val)) {
-                return false;
+            if (preg_match("/^\s/", $val) || preg_match("/\s$/", $val)) {
+                return false; // reject leading/trailing whitespace
             }
 
-            return (float) $val;
+            return filter_var($val, FILTER_VALIDATE_FLOAT);
         default:
             return false;
     }
