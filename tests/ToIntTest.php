@@ -21,43 +21,43 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     public function testShouldNotPass()
     {
-        $this->assertFalse(to_int("10.0"));
-        $this->assertFalse(to_int("75e-5"));
-        $this->assertFalse(to_int("31e+7"));
-        $this->assertFalse(to_int("0x10"));
-        $this->assertFalse(to_int(1.5));
-        $this->assertFalse(to_int("1.5"));
+        $this->assertNull(to_int("10.0"));
+        $this->assertNull(to_int("75e-5"));
+        $this->assertNull(to_int("31e+7"));
+        $this->assertNull(to_int("0x10"));
+        $this->assertNull(to_int(1.5));
+        $this->assertNull(to_int("1.5"));
     }
 
     public function testDisallowedTypes()
     {
-        $this->assertFalse(to_int(null));
-        $this->assertFalse(to_int(true));
-        $this->assertFalse(to_int(false));
-        $this->assertFalse(to_int(new stdClass()));
-        $this->assertFalse(to_int(fopen("data:text/html,foobar", "r")));
-        $this->assertFalse(to_int([]));
+        $this->assertNull(to_int(null));
+        $this->assertNull(to_int(true));
+        $this->assertNull(to_int(false));
+        $this->assertNull(to_int(new stdClass()));
+        $this->assertNull(to_int(fopen("data:text/html,foobar", "r")));
+        $this->assertNull(to_int([]));
     }
 
     public function testRejectLeadingTrailingChars()
     {
-        $this->assertFalse(to_int("10abc"));
-        $this->assertFalse(to_int("abc10"));
-        $this->assertFalse(to_int("   100    "));
-        $this->assertFalse(to_int("\n\t\v\r\f   78 \n \t\v\r\f   \n"));
-        $this->assertFalse(to_int("\n\t\v\r78"));
-        $this->assertFalse(to_int("\n\t\v\r\f78"));
-        $this->assertFalse(to_int("78\n\t\v\r\f"));
+        $this->assertNull(to_int("10abc"));
+        $this->assertNull(to_int("abc10"));
+        $this->assertNull(to_int("   100    "));
+        $this->assertNull(to_int("\n\t\v\r\f   78 \n \t\v\r\f   \n"));
+        $this->assertNull(to_int("\n\t\v\r78"));
+        $this->assertNull(to_int("\n\t\v\r\f78"));
+        $this->assertNull(to_int("78\n\t\v\r\f"));
     }
 
     public function testOverflowNanInf()
     {
-        $this->assertFalse(to_int(INF));
-        $this->assertFalse(to_int(-INF));
-        $this->assertFalse(to_int(NAN));
-        $this->assertFalse(to_int(PHP_INT_MAX * 2));
-        $this->assertFalse(to_int(PHP_INT_MIN * 2));
-        $this->assertFalse(to_int((string) PHP_INT_MAX * 2));
-        $this->assertFalse(to_int((string) PHP_INT_MIN * 2));
+        $this->assertNull(to_int(INF));
+        $this->assertNull(to_int(-INF));
+        $this->assertNull(to_int(NAN));
+        $this->assertNull(to_int(PHP_INT_MAX * 2));
+        $this->assertNull(to_int(PHP_INT_MIN * 2));
+        $this->assertNull(to_int((string) PHP_INT_MAX * 2));
+        $this->assertNull(to_int((string) PHP_INT_MIN * 2));
     }
 }

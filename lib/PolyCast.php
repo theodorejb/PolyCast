@@ -7,7 +7,7 @@ if (!defined("PHP_INT_MIN")) {
 }
 
 /**
- * Returns the value as an int, or false if it cannot be safely cast
+ * Returns the value as an int, or null if it cannot be safely cast
  * @param mixed $val
  * @return int
  */
@@ -17,24 +17,24 @@ function to_int($val)
         case "integer":
             return $val;
         case "double":
-            return ($val === (float) (int) $val) ? (int) $val : false;
+            return ($val === (float) (int) $val) ? (int) $val : null;
         case "string":
             if (!preg_match("/^[+-]?[0-9]+$/", $val)) {
-                return false; // reject leading/trailing whitespace
+                return null; // reject leading/trailing whitespace
             }
 
             if ((float) $val > PHP_INT_MAX || (float) $val < PHP_INT_MIN) {
-                return false; // reject overflows
+                return null; // reject overflows
             }
 
             return (int) $val;
         default:
-            return false;
+            return null;
     }
 }
 
 /**
- * Returns the value as a float, or false if it cannot be safely cast
+ * Returns the value as a float, or null if it cannot be safely cast
  * @param mixed $val
  * @return float
  */
@@ -47,17 +47,18 @@ function to_float($val)
             return (float) $val;
         case "string":
             if (preg_match("/^\s/", $val) || preg_match("/\s$/", $val)) {
-                return false; // reject leading/trailing whitespace
+                return null; // reject leading/trailing whitespace
             }
 
-            return filter_var($val, FILTER_VALIDATE_FLOAT);
+            $float = filter_var($val, FILTER_VALIDATE_FLOAT);
+            return $float === false ? null : $float;
         default:
-            return false;
+            return null;
     }
 }
 
 /**
- * Returns the value as a string, or false if it cannot be safely cast
+ * Returns the value as a string, or null if it cannot be safely cast
  * @param mixed $val
  * @return string
  */
@@ -73,9 +74,9 @@ function to_string($val)
             if (method_exists($val, "__toString")) {
                 return $val->__toString();
             } else {
-                return false;
+                return null;
             }
         default:
-            return false;
+            return null;
     }
 }

@@ -26,25 +26,25 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
 
     public function testDisallowedTypes()
     {
-        $this->assertFalse(to_float("0x10"));
-        $this->assertFalse(to_float(null));
-        $this->assertFalse(to_float(true));
-        $this->assertFalse(to_float(false));
-        $this->assertFalse(to_float(new stdClass()));
-        $this->assertFalse(to_float(fopen("data:text/html,foobar", "r")));
-        $this->assertFalse(to_float([]));
+        $this->assertNull(to_float("0x10"));
+        $this->assertNull(to_float(null));
+        $this->assertNull(to_float(true));
+        $this->assertNull(to_float(false));
+        $this->assertNull(to_float(new stdClass()));
+        $this->assertNull(to_float(fopen("data:text/html,foobar", "r")));
+        $this->assertNull(to_float([]));
     }
 
     public function testRejectLeadingTrailingChars()
     {
-        $this->assertFalse(to_float("10abc"));
-        $this->assertFalse(to_float("abc10"));
-        $this->assertFalse(to_float("foobar"));
-        $this->assertFalse(to_float("   100    "));
-        $this->assertFalse(to_float(("\n\t\v\r\f   78 \n \t\v\r\f   \n")));
-        $this->assertFalse(to_float("\n\t\v\r78"));
-        $this->assertFalse(to_float("\n\t\v\r\f78"));
-        $this->assertFalse(to_float("78\n\t\v\r\f"));
+        $this->assertNull(to_float("10abc"));
+        $this->assertNull(to_float("abc10"));
+        $this->assertNull(to_float("foobar"));
+        $this->assertNull(to_float("   100    "));
+        $this->assertNull(to_float(("\n\t\v\r\f   78 \n \t\v\r\f   \n")));
+        $this->assertNull(to_float("\n\t\v\r78"));
+        $this->assertNull(to_float("\n\t\v\r\f78"));
+        $this->assertNull(to_float("78\n\t\v\r\f"));
     }
 
     public function testOverflowNanInf()
