@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/theodorejb/PolyCast.svg?branch=master)](https://travis-ci.org/theodorejb/PolyCast) [![Packagist Version](https://img.shields.io/packagist/v/theodorejb/polycast.svg)](https://packagist.org/packages/theodorejb/polycast) [![License](https://img.shields.io/packagist/l/theodorejb/polycast.svg)](LICENSE.md)
 
 Adds `to_int`, `to_float`, and `to_string` functions for safe, strict casting.
-The functions return `false` if a value cannot be safely cast.
+The functions return `null` if a value cannot be safely cast.
 
 Based on https://github.com/php/php-src/pull/874.
 An RFC proposing inclusion in PHP 7 was opened for discussion on 2014-10-20:
@@ -29,25 +29,25 @@ in your application's bootstrap file.
 
 Value      | `to_int()` | `to_float()` | `to_string()`
 ---------- | ---------- | ------------ | -------------
-`null`     | `false`    | `false`      | `false`
-`true`     | `false`    | `false`      | `false`
-`false`    | `false`    | `false`      | `false`
-`array`    | `false`    | `false`      | `false`
-resource   | `false`    | `false`      | `false`
-`stdClass` | `false`    | `false`      | `false`
+`null`     | `null`    | `null`      | `null`
+`true`     | `null`    | `null`      | `null`
+`false`    | `null`    | `null`      | `null`
+`array`    | `null`    | `null`      | `null`
+resource   | `null`    | `null`      | `null`
+`stdClass` | `null`    | `null`      | `null`
 "10"       | 10         | 10.0         | "10"
 "-10"      | -10        | -10.0        | "-10"
 10.0       | 10         | 10.0         | "10"
-"10.0"     | `false`    | 10.0         | "10.0"
-1.5        | `false`    | 1.5          | "1.5"
-"1.5"      | `false`    | 1.5          | "1.5"
-"31e+7"    | `false`    | 310000000.0  | "31e+7"
-"75e-5"    | `false`    | 0.00075      | "75e-5"
-`INF`      | `false`    | `INF`        | "INF"
-`NAN`      | `false`    | `NAN`        | "NAN"
-"   10   " | `false`    | `false`      | "   10   "
-"10abc"    | `false`    | `false`      | "10abc"
-"abc10"    | `false`    | `false`      | "abc10"
+"10.0"     | `null`    | 10.0         | "10.0"
+1.5        | `null`    | 1.5          | "1.5"
+"1.5"      | `null`    | 1.5          | "1.5"
+"31e+7"    | `null`    | 310000000.0  | "31e+7"
+"75e-5"    | `null`    | 0.00075      | "75e-5"
+`INF`      | `null`    | `INF`        | "INF"
+`NAN`      | `null`    | `NAN`        | "NAN"
+"   10   " | `null`    | `null`      | "   10   "
+"10abc"    | `null`    | `null`      | "10abc"
+"abc10"    | `null`    | `null`      | "abc10"
 
 ### Support for `__toString()`
 
@@ -59,7 +59,7 @@ class Stringable {
     }
 }
 
-to_string(new NotStringable()); // false
+to_string(new NotStringable()); // null
 to_string(new Stringable());    // "foobar"
 ```
 
