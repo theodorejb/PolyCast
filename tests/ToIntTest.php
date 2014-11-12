@@ -8,8 +8,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertSame(0, to_int(0));
         $this->assertSame(0, to_int(0.0));
         $this->assertSame(10, to_int("10"));
-        $this->assertSame(10, to_int("010"));
-        $this->assertSame(10, to_int("+10"));
+        $this->assertSame(-10, to_int("-10"));
         $this->assertSame(10, to_int(10));
         $this->assertSame(10, to_int(10.0));
 
@@ -21,6 +20,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     public function testShouldNotPass()
     {
+        $this->assertNull(to_int(""));
         $this->assertNull(to_int("10.0"));
         $this->assertNull(to_int("75e-5"));
         $this->assertNull(to_int("31e+7"));
@@ -41,11 +41,12 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     public function testRejectLeadingTrailingChars()
     {
+        $this->assertNull(to_int("010"));
+        $this->assertNull(to_int("+10"));
         $this->assertNull(to_int("10abc"));
         $this->assertNull(to_int("abc10"));
         $this->assertNull(to_int("   100    "));
         $this->assertNull(to_int("\n\t\v\r\f   78 \n \t\v\r\f   \n"));
-        $this->assertNull(to_int("\n\t\v\r78"));
         $this->assertNull(to_int("\n\t\v\r\f78"));
         $this->assertNull(to_int("78\n\t\v\r\f"));
     }

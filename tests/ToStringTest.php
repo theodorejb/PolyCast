@@ -10,6 +10,7 @@ class ToStringTest extends PHPUnit_Framework_TestCase
         $this->assertSame("INF", to_string(INF));
         $this->assertSame("-INF", to_string(-INF));
         $this->assertSame("NAN", to_string(NAN));
+        $this->assertSame("", to_string(""));
     }
 
     public function testDisallowedTypes()
