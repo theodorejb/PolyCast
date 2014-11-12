@@ -35,7 +35,6 @@ Value      | `to_int()` | `to_float()` | `to_string()`
 `array`    | `null`     | `null`       | `null`
 resource   | `null`     | `null`       | `null`
 `stdClass` | `null`     | `null`       | `null`
-""         | `null`     | `null`       | `null`
 "10"       | 10         | 10.0         | "10"
 "-10"      | -10        | -10.0        | "-10"
 10.0       | 10         | 10.0         | "10"
@@ -46,6 +45,7 @@ resource   | `null`     | `null`       | `null`
 "75e-5"    | `null`     | 0.00075      | "75e-5"
 `INF`      | `null`     | `INF`        | "INF"
 `NAN`      | `null`     | `NAN`        | "NAN"
+""         | `null`     | `null`       | ""
 "   10   " | `null`     | `null`       | "   10   "
 "10abc"    | `null`     | `null`       | "10abc"
 "abc10"    | `null`     | `null`       | "abc10"
