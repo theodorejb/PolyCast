@@ -29,25 +29,28 @@ in your application's bootstrap file.
 
 Value      | `to_int()` | `to_float()` | `to_string()`
 ---------- | ---------- | ------------ | -------------
-`null`     | `null`    | `null`      | `null`
-`true`     | `null`    | `null`      | `null`
-`false`    | `null`    | `null`      | `null`
-`array`    | `null`    | `null`      | `null`
-resource   | `null`    | `null`      | `null`
-`stdClass` | `null`    | `null`      | `null`
+`null`     | `null`     | `null`       | `null`
+`true`     | `null`     | `null`       | `null`
+`false`    | `null`     | `null`       | `null`
+`array`    | `null`     | `null`       | `null`
+resource   | `null`     | `null`       | `null`
+`stdClass` | `null`     | `null`       | `null`
+""         | `null`     | `null`       | `null`
 "10"       | 10         | 10.0         | "10"
 "-10"      | -10        | -10.0        | "-10"
 10.0       | 10         | 10.0         | "10"
-"10.0"     | `null`    | 10.0         | "10.0"
-1.5        | `null`    | 1.5          | "1.5"
-"1.5"      | `null`    | 1.5          | "1.5"
-"31e+7"    | `null`    | 310000000.0  | "31e+7"
-"75e-5"    | `null`    | 0.00075      | "75e-5"
-`INF`      | `null`    | `INF`        | "INF"
-`NAN`      | `null`    | `NAN`        | "NAN"
-"   10   " | `null`    | `null`      | "   10   "
-"10abc"    | `null`    | `null`      | "10abc"
-"abc10"    | `null`    | `null`      | "abc10"
+"10.0"     | `null`     | 10.0         | "10.0"
+1.5        | `null`     | 1.5          | "1.5"
+"1.5"      | `null`     | 1.5          | "1.5"
+"31e+7"    | `null`     | 310000000.0  | "31e+7"
+"75e-5"    | `null`     | 0.00075      | "75e-5"
+`INF`      | `null`     | `INF`        | "INF"
+`NAN`      | `null`     | `NAN`        | "NAN"
+"   10   " | `null`     | `null`       | "   10   "
+"10abc"    | `null`     | `null`       | "10abc"
+"abc10"    | `null`     | `null`       | "abc10"
+"+10"      | `null`     | `null`       | "+10"
+"010"      | `null`     | `null`       | "010"
 
 ### Support for `__toString()`
 
