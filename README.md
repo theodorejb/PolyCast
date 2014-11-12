@@ -17,7 +17,7 @@ add the following to the composer.json file in your project root:
 ```json
 {
     "require": {
-        "theodorejb/polycast": "~0.4"
+        "theodorejb/polycast": "~0.5"
     }
 }
 ```
