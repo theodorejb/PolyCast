@@ -54,6 +54,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
      */
     public function testDisallowedTypes($val)
     {
+        $this->assertNull(try_float($val));
         to_float($val);
     }
 
@@ -79,6 +80,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidFormats($val)
     {
+        $this->assertNull(try_float($val));
         to_float($val);
     }
 }

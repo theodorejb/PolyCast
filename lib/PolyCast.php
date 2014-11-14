@@ -124,3 +124,45 @@ function to_string($val)
             throw new InvalidArgumentException("Expected string, integer, float, or object, given $type");
     }
 }
+
+/**
+ * Returns the value as an int, or null if it cannot be safely cast
+ * @param mixed $val
+ * @return int
+ */
+function try_int($val)
+{
+    try {
+        return to_int($val);
+    } catch (Exception $e) {
+        return null;
+    }
+}
+
+/**
+ * Returns the value as a float, or null if it cannot be safely cast
+ * @param mixed $val
+ * @return float
+ */
+function try_float($val)
+{
+    try {
+        return to_float($val);
+    } catch (Exception $e) {
+        return null;
+    }
+}
+
+/**
+ * Returns the value as a string, or null if it cannot be safely cast
+ * @param mixed $val
+ * @return string
+ */
+function try_string($val)
+{
+    try {
+        return to_string($val);
+    } catch (Exception $e) {
+        return null;
+    }
+}

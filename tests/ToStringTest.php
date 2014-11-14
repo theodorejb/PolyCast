@@ -31,6 +31,7 @@ class ToStringTest extends PHPUnit_Framework_TestCase
      */
     public function testDisallowedTypes($val)
     {
+        $this->assertNull(try_string($val));
         to_string($val);
     }
 
@@ -48,6 +49,7 @@ class ToStringTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidObjects($val)
     {
+        $this->assertNull(try_string($val));
         to_string($val);
     }
 }
