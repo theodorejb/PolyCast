@@ -23,9 +23,9 @@ function to_int($val)
 {
     $overflowCheck = function ($val) {
         if ($val > PHP_INT_MAX) {
-            throw new OverflowException("Value $val exceeds maximum integter size");
+            throw new OverflowException("Value exceeds maximum integter size");
         } elseif ($val < PHP_INT_MIN) {
-            throw new OverflowException("Value $val is less than minimum integer size");
+            throw new OverflowException("Value is less than minimum integer size");
         }
     };
 
@@ -37,13 +37,13 @@ function to_int($val)
         case "double":
             if ($val !== (float) (int) $val) {
                 $overflowCheck($val); // if value doesn't overflow, then it's non-integral
-                throw new DomainException("The float $val cannot be safely converted to an integer");
+                throw new DomainException("Non-integral floats cannot be safely cast to an integer");
             }
 
             return (int) $val;
         case "string":
             if ($val !== (string) (int) $val) {
-                throw new FormatException("The string $val does not have a valid integer format");
+                throw new FormatException("Value does not have a valid integer format");
             }
 
             $overflowCheck((float) $val);
@@ -82,13 +82,13 @@ function to_float($val)
 
             if (!("1" <= $c && $c <= "9") && $c !== "-") {
                 // reject leading whitespace, + sign
-                throw new FormatException("The string $val does not have a valid float format");
+                throw new FormatException("String does not have a valid float format");
             }
 
             $float = filter_var($val, FILTER_VALIDATE_FLOAT);
 
             if ($float === false) {
-                throw new FormatException("The string $val does not have a valid float format");
+                throw new FormatException("String does not have a valid float format");
             }
 
             return $float;
@@ -118,7 +118,7 @@ function to_string($val)
             if (method_exists($val, "__toString")) {
                 return $val->__toString();
             } else {
-                throw new BadMethodCallException("Object " . get_class($val) . " cannot be converted to a string without a __toString method");
+                throw new BadMethodCallException("Object cannot be converted to a string without a __toString method");
             }
         default:
             throw new InvalidArgumentException("Expected string, integer, float, or object, given $type");
