@@ -3,6 +3,6 @@
 /**
  * Exception thrown when the format of an argument is invalid
  */
-class FormatException extends RuntimeException
+class FormatException extends Exception
 {
 }
