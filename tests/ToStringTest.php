@@ -11,22 +11,44 @@ class ToStringTest extends PHPUnit_Framework_TestCase
         $this->assertSame("-INF", to_string(-INF));
         $this->assertSame("NAN", to_string(NAN));
         $this->assertSame("", to_string(""));
-    }
-
-    public function testDisallowedTypes()
-    {
-        $this->assertNull(to_string(null));
-        $this->assertNull(to_string(true));
-        $this->assertNull(to_string(false));
-        $this->assertNull(to_string([]));
-        $this->assertNull(to_string(fopen("data:text/html,foobar", "r")));
-    }
-
-    public function testObjects()
-    {
-        $this->assertNull(to_string(new stdClass()));
-        $this->assertNull(to_string(new NotStringable()));
         $this->assertSame("foobar", to_string(new Stringable()));
+    }
+
+    public function disallowedTypes()
+    {
+        return [
+            [null],
+            [true],
+            [false],
+            [[]],
+            [fopen("data:text/html,foobar", "r")],
+        ];
+    }
+
+    /**
+     * @dataProvider disallowedTypes
+     * @expectedException InvalidArgumentException
+     */
+    public function testDisallowedTypes($val)
+    {
+        to_string($val);
+    }
+
+    public function invalidObjects()
+    {
+        return [
+            [new stdClass()],
+            [new NotStringable()],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidObjects
+     * @expectedException BadMethodCallException
+     */
+    public function testInvalidObjects($val)
+    {
+        to_string($val);
     }
 }
 

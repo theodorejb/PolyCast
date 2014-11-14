@@ -18,47 +18,91 @@ class ToIntTest extends PHPUnit_Framework_TestCase
         $this->assertSame(PHP_INT_MIN, to_int(PHP_INT_MIN));
     }
 
-    public function testShouldNotPass()
+    public function disallowedTypes()
     {
-        $this->assertNull(to_int(""));
-        $this->assertNull(to_int("10.0"));
-        $this->assertNull(to_int("75e-5"));
-        $this->assertNull(to_int("31e+7"));
-        $this->assertNull(to_int("0x10"));
-        $this->assertNull(to_int(1.5));
-        $this->assertNull(to_int("1.5"));
+        return [
+            [null],
+            [true],
+            [false],
+            [new stdClass()],
+            [fopen("data:text/html,foobar", "r")],
+            [[]],
+        ];
     }
 
-    public function testDisallowedTypes()
+    /**
+     * @dataProvider disallowedTypes
+     * @expectedException InvalidArgumentException
+     */
+    public function testDisallowedTypes($val)
     {
-        $this->assertNull(to_int(null));
-        $this->assertNull(to_int(true));
-        $this->assertNull(to_int(false));
-        $this->assertNull(to_int(new stdClass()));
-        $this->assertNull(to_int(fopen("data:text/html,foobar", "r")));
-        $this->assertNull(to_int([]));
+        to_int($val);
     }
 
-    public function testRejectLeadingTrailingChars()
+    public function invalidFormats()
     {
-        $this->assertNull(to_int("010"));
-        $this->assertNull(to_int("+10"));
-        $this->assertNull(to_int("10abc"));
-        $this->assertNull(to_int("abc10"));
-        $this->assertNull(to_int("   100    "));
-        $this->assertNull(to_int("\n\t\v\r\f   78 \n \t\v\r\f   \n"));
-        $this->assertNull(to_int("\n\t\v\r\f78"));
-        $this->assertNull(to_int("78\n\t\v\r\f"));
+        return [
+            [""],
+            ["10.0"],
+            ["75e-5"],
+            ["31e+7"],
+            ["0x10"],
+            ["1.5"],
+            ["010"],
+            ["+10"],
+            ["10abc"],
+            ["abc10"],
+            ["   100    "],
+            ["\n\t\v\r\f   78 \n \t\v\r\f   \n"],
+            ["\n\t\v\r\f78"],
+            ["78\n\t\v\r\f"],
+        ];
     }
 
-    public function testOverflowNanInf()
+    /**
+     * @dataProvider invalidFormats
+     * @expectedException FormatException
+     */
+    public function testInvalidFormats($val)
     {
-        $this->assertNull(to_int(INF));
-        $this->assertNull(to_int(-INF));
-        $this->assertNull(to_int(NAN));
-        $this->assertNull(to_int(PHP_INT_MAX * 2));
-        $this->assertNull(to_int(PHP_INT_MIN * 2));
-        $this->assertNull(to_int((string) PHP_INT_MAX * 2));
-        $this->assertNull(to_int((string) PHP_INT_MIN * 2));
+        to_int($val);
+    }
+
+    public function unsafeValues()
+    {
+        return [
+            [NAN],
+            [1.5],
+        ];
+    }
+
+    /**
+     * @dataProvider unsafeValues
+     * @expectedException DomainException
+     */
+    public function testUnsafeValues($val)
+    {
+        to_int($val);
+    }
+
+    public function overflowValues()
+    {
+        return [
+            [INF],
+            [-INF],
+            [PHP_INT_MAX * 2],
+            [PHP_INT_MIN * 2],
+            [(string) PHP_INT_MAX * 2],
+            [(string) PHP_INT_MIN * 2],
+        ];
+    }
+
+    /**
+     * @dataProvider overflowValues
+     * @expectedException OverflowException
+     */
+    public function testOverflowValues($val)
+    {
+        to_int($val);
     }
 }
