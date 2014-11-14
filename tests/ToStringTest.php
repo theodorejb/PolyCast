@@ -2,16 +2,27 @@
 
 class ToStringTest extends PHPUnit_Framework_TestCase
 {
-    public function testShouldPass()
+    public function shouldPass()
     {
-        $this->assertSame("foobar", to_string("foobar"));
-        $this->assertSame("123", to_string(123));
-        $this->assertSame("123.45", to_string(123.45));
-        $this->assertSame("INF", to_string(INF));
-        $this->assertSame("-INF", to_string(-INF));
-        $this->assertSame("NAN", to_string(NAN));
-        $this->assertSame("", to_string(""));
-        $this->assertSame("foobar", to_string(new Stringable()));
+        return [
+            ["foobar", "foobar"],
+            ["123", 123],
+            ["123.45", 123.45],
+            ["INF", INF],
+            ["-INF", -INF],
+            ["NAN", NAN],
+            ["", ""],
+            ["foobar", new Stringable()],
+        ];
+    }
+
+    /**
+     * @dataProvider shouldPass
+     */
+    public function testShouldPass($expected, $val)
+    {
+        $this->assertSame($expected, try_string($val));
+        $this->assertSame($expected, to_string($val));
     }
 
     public function disallowedTypes()
