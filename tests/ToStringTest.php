@@ -56,7 +56,7 @@ class ToStringTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidObjects
-     * @expectedException BadMethodCallException
+     * @expectedException CastException
      */
     public function testInvalidObjects($val)
     {

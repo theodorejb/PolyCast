@@ -10,6 +10,10 @@ if (!class_exists("FormatException")) {
     require "FormatException.php";
 }
 
+if (!class_exists("CastException")) {
+    require "CastException.php";
+}
+
 /**
  * Returns the value as an int
  * @param mixed $val
@@ -17,7 +21,7 @@ if (!class_exists("FormatException")) {
  * @throws InvalidArgumentException if the value has an invalid type
  * @throws FormatException if the value is a string with an invalid format
  * @throws OverflowException if the value is less than PHP_INT_MIN or greater than PHP_INT_MAX
- * @throws DomainException if the value is a float which cannot be safely cast
+ * @throws CastException if the value is a non-integral float or Not-a-Number (NaN)
  */
 function to_int($val)
 {
@@ -37,7 +41,7 @@ function to_int($val)
         case "double":
             if ($val !== (float) (int) $val) {
                 $overflowCheck($val); // if value doesn't overflow, then it's non-integral
-                throw new DomainException("Non-integral floats cannot be safely cast to an integer");
+                throw new CastException("Non-integral floats cannot be safely cast to an integer");
             }
 
             return (int) $val;
@@ -101,7 +105,7 @@ function to_float($val)
  * Returns the value as a string
  * @param mixed $val
  * @return string
- * @throws BadMethodCallException if an object without a __toString method is passed
+ * @throws CastException if an object without a __toString method is passed
  * @throws InvalidArgumentException if the value has an invalid type
  */
 function to_string($val)
@@ -118,7 +122,7 @@ function to_string($val)
             if (method_exists($val, "__toString")) {
                 return $val->__toString();
             } else {
-                throw new BadMethodCallException("Object cannot be converted to a string without a __toString method");
+                throw new CastException("Object cannot be converted to a string without a __toString method");
             }
         default:
             throw new InvalidArgumentException("Expected string, integer, float, or object, given $type");

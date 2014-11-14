@@ -90,7 +90,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider unsafeValues
-     * @expectedException DomainException
+     * @expectedException CastException
      */
     public function testUnsafeValues($val)
     {
