@@ -42,7 +42,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider disallowedTypes
-     * @expectedException InvalidArgumentException
+     * @expectedException CastException
      */
     public function testDisallowedTypes($val)
     {
@@ -72,7 +72,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidFormats
-     * @expectedException FormatException
+     * @expectedException CastException
      */
     public function testInvalidFormats($val)
     {
@@ -112,7 +112,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider overflowValues
-     * @expectedException OverflowException
+     * @expectedException CastException
      */
     public function testOverflowValues($val)
     {

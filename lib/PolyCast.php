@@ -6,10 +6,6 @@ if (!defined("PHP_INT_MIN")) {
     define("PHP_INT_MIN", ~PHP_INT_MAX);
 }
 
-if (!class_exists("FormatException")) {
-    require "FormatException.php";
-}
-
 if (!class_exists("CastException")) {
     require "CastException.php";
 }
@@ -18,18 +14,15 @@ if (!class_exists("CastException")) {
  * Returns the value as an int
  * @param mixed $val
  * @return int
- * @throws InvalidArgumentException if the value has an invalid type
- * @throws FormatException if the value is a string with an invalid format
- * @throws OverflowException if the value is less than PHP_INT_MIN or greater than PHP_INT_MAX
- * @throws CastException if the value is a non-integral float or Not-a-Number (NaN)
+ * @throws CastException if the value cannot be safely cast to an integer
  */
 function to_int($val)
 {
     $overflowCheck = function ($val) {
         if ($val > PHP_INT_MAX) {
-            throw new OverflowException("Value exceeds maximum integter size");
+            throw new CastException("Value exceeds maximum integter size");
         } elseif ($val < PHP_INT_MIN) {
-            throw new OverflowException("Value is less than minimum integer size");
+            throw new CastException("Value is less than minimum integer size");
         }
     };
 
@@ -47,13 +40,13 @@ function to_int($val)
             return (int) $val;
         case "string":
             if ($val !== (string) (int) $val) {
-                throw new FormatException("Value does not have a valid integer format");
+                throw new CastException("Value does not have a valid integer format");
             }
 
             $overflowCheck((float) $val);
             return (int) $val;
         default:
-            throw new InvalidArgumentException("Expected integer, float, or string, given $type");
+            throw new CastException("Expected integer, float, or string, given $type");
     }
 }
 
@@ -61,8 +54,7 @@ function to_int($val)
  * Returns the value as a float
  * @param mixed $val
  * @return float
- * @throws InvalidArgumentException if the value has an invalid type
- * @throws FormatException if the value is a string with an incorrect format
+ * @throws CastException if the value cannot be safely cast to a float
  */
 function to_float($val)
 {
@@ -79,25 +71,25 @@ function to_float($val)
             }
 
             if ($val === "") {
-                throw new FormatException("Failed to convert empty string to float");
+                throw new CastException("Failed to convert empty string to float");
             }
 
             $c = $val[0]; // get the first character of the string
 
             if (!("1" <= $c && $c <= "9") && $c !== "-") {
                 // reject leading whitespace, + sign
-                throw new FormatException("String does not have a valid float format");
+                throw new CastException("String does not have a valid float format");
             }
 
             $float = filter_var($val, FILTER_VALIDATE_FLOAT);
 
             if ($float === false) {
-                throw new FormatException("String does not have a valid float format");
+                throw new CastException("String does not have a valid float format");
             }
 
             return $float;
         default:
-            throw new InvalidArgumentException("Expected float, integer, or string, given $type");
+            throw new CastException("Expected float, integer, or string, given $type");
     }
 }
 
@@ -105,8 +97,7 @@ function to_float($val)
  * Returns the value as a string
  * @param mixed $val
  * @return string
- * @throws CastException if an object without a __toString method is passed
- * @throws InvalidArgumentException if the value has an invalid type
+ * @throws CastException if the value cannot be safely cast to a string
  */
 function to_string($val)
 {
@@ -125,7 +116,7 @@ function to_string($val)
                 throw new CastException("Object cannot be converted to a string without a __toString method");
             }
         default:
-            throw new InvalidArgumentException("Expected string, integer, float, or object, given $type");
+            throw new CastException("Expected string, integer, float, or object, given $type");
     }
 }
 

@@ -60,7 +60,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider disallowedTypes
-     * @expectedException InvalidArgumentException
+     * @expectedException CastException
      */
     public function testDisallowedTypes($val)
     {
@@ -86,7 +86,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidFormats
-     * @expectedException FormatException
+     * @expectedException CastException
      */
     public function testInvalidFormats($val)
     {

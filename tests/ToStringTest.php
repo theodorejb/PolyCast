@@ -38,7 +38,7 @@ class ToStringTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider disallowedTypes
-     * @expectedException InvalidArgumentException
+     * @expectedException CastException
      */
     public function testDisallowedTypes($val)
     {
