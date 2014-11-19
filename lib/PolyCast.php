@@ -20,9 +20,9 @@ function to_int($val)
 {
     $overflowCheck = function ($val) {
         if ($val > PHP_INT_MAX) {
-            throw new CastException("Value exceeds maximum integter size");
+            throw new CastException("Value could not be converted to int");
         } elseif ($val < PHP_INT_MIN) {
-            throw new CastException("Value is less than minimum integer size");
+            throw new CastException("Value could not be converted to int");
         }
     };
 
@@ -34,7 +34,7 @@ function to_int($val)
         case "double":
             if ($val !== (float) (int) $val) {
                 $overflowCheck($val); // if value doesn't overflow, then it's non-integral
-                throw new CastException("Non-integral floats cannot be safely cast to an integer");
+                throw new CastException("Value could not be converted to int");
             }
 
             return (int) $val;
@@ -48,7 +48,7 @@ function to_int($val)
             $overflowCheck((float) $val);
             return (int) $val;
         default:
-            throw new CastException("Expected integer, float, or string, given $type");
+            throw new CastException("Value could not be converted to int");
     }
 }
 
@@ -73,25 +73,25 @@ function to_float($val)
             }
 
             if ($val === "") {
-                throw new CastException("Failed to convert empty string to float");
+                throw new CastException("Value could not be converted to float");
             }
 
             $c = $val[0]; // get the first character of the string
 
             if (!("1" <= $c && $c <= "9") && $c !== "-" && $c !== "+") {
                 // reject leading whitespace, + sign
-                throw new CastException("String does not have a valid float format");
+                throw new CastException("Value could not be converted to float");
             }
 
             $float = filter_var($val, FILTER_VALIDATE_FLOAT);
 
             if ($float === false) {
-                throw new CastException("String does not have a valid float format");
+                throw new CastException("Value could not be converted to float");
             }
 
             return $float;
         default:
-            throw new CastException("Expected float, integer, or string, given $type");
+            throw new CastException("Value could not be converted to float");
     }
 }
 
@@ -115,10 +115,10 @@ function to_string($val)
             if (method_exists($val, "__toString")) {
                 return $val->__toString();
             } else {
-                throw new CastException("Object cannot be converted to a string without a __toString method");
+                throw new CastException("Value could not be converted to string");
             }
         default:
-            throw new CastException("Expected string, integer, float, or object, given $type");
+            throw new CastException("Value could not be converted to string");
     }
 }
 
