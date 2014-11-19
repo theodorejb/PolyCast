@@ -39,8 +39,10 @@ function to_int($val)
 
             return (int) $val;
         case "string":
-            if ($val !== (string) (int) $val) {
-                throw new CastException("Value does not have a valid integer format");
+            $losslessCast = (string) (int) $val;
+
+            if ($val !== $losslessCast && $val !== "+$losslessCast") {
+                throw new CastException("Value could not be converted to int");
             }
 
             $overflowCheck((float) $val);
@@ -76,7 +78,7 @@ function to_float($val)
 
             $c = $val[0]; // get the first character of the string
 
-            if (!("1" <= $c && $c <= "9") && $c !== "-") {
+            if (!("1" <= $c && $c <= "9") && $c !== "-" && $c !== "+") {
                 // reject leading whitespace, + sign
                 throw new CastException("String does not have a valid float format");
             }
