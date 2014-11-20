@@ -79,7 +79,7 @@ function to_float($val)
             $c = $val[0]; // get the first character of the string
 
             if (!("1" <= $c && $c <= "9") && $c !== "-" && $c !== "+") {
-                // reject leading whitespace, + sign
+                // reject leading whitespace and zeros
                 throw new CastException("Value could not be converted to float");
             }
 
