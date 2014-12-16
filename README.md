@@ -8,9 +8,8 @@ The functions throw a `CastException` if a value cannot be safely cast.
 Also adds `try_int`, `try_float`, and `try_string` methods, which validate identically
 but return `null` instead of throwing an exception if a value cannot be safely cast.
 
-Based on https://github.com/php/php-src/pull/874.
-An RFC proposing inclusion in PHP 7 was opened for discussion on 2014-10-20:
-https://wiki.php.net/rfc/safe_cast.
+Based on the [Safe Casting Functions RFC](https://wiki.php.net/rfc/safe_cast)
+proposed (but ultimately rejected) for PHP 7.
 
 ## Installation
 
