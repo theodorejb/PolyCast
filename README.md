@@ -2,14 +2,43 @@
 
 [![Build Status](https://travis-ci.org/theodorejb/PolyCast.svg?branch=master)](https://travis-ci.org/theodorejb/PolyCast) [![Packagist Version](https://img.shields.io/packagist/v/theodorejb/polycast.svg)](https://packagist.org/packages/theodorejb/polycast) [![License](https://img.shields.io/packagist/l/theodorejb/polycast.svg)](LICENSE.md)
 
-Adds `to_int`, `to_float`, and `to_string` functions for safe, strict casting.
-The functions throw a `CastException` if a value cannot be safely cast.
+Provides `int_castable`, `float_castable`, and `string_castable` functions.
+The functions return true if a value can be cast to the designated type without
+data loss, and false if it cannot.
 
-Also adds `try_int`, `try_float`, and `try_string` methods, which validate identically
-but return `null` instead of throwing an exception if a value cannot be safely cast.
+Three complementary functions are also included: `to_int`, `to_float`, and
+`to_string`. These functions cast and return a value if it can be converted
+without data loss, and throw a `CastException` if it cannot.
 
-Based on the [Safe Casting Functions RFC](https://wiki.php.net/rfc/safe_cast)
+This library was originally based on the [Safe Casting Functions RFC](https://wiki.php.net/rfc/safe_cast)
 proposed (but ultimately rejected) for PHP 7.
+
+## Acceptable casts
+
+### `int_castable`
+
+* Integers
+* Floats without a remainder between `PHP_INT_MIN` and `PHP_INT_MAX`
+* Strings with an optional positive/negative sign, without leading zeros, and
+containing the digits 0-9 with a value between `PHP_INT_MIN` and `PHP_INT_MAX`.
+
+### `float_castable`
+
+* Floats
+* Integers
+* Strings with an optional positive/negative sign, without leading zeros, and
+matching the format described at http://php.net/manual/en/language.types.float.php.
+
+### `string_castable`
+
+* Strings
+* Integers
+* Floats
+* Objects with a `__toString` method
+
+The functions will always return false if passed `null`, `true` or `false`,
+an array, resource, or object (with the exception of objects with a `__toString`
+method passed to `string_castable`).
 
 ## Installation
 
@@ -19,7 +48,7 @@ add the following to the composer.json file in your project root:
 ```json
 {
     "require": {
-        "theodorejb/polycast": "~0.6"
+        "theodorejb/polycast": "~0.7"
     }
 }
 ```
@@ -27,45 +56,52 @@ add the following to the composer.json file in your project root:
 Then run `composer install` and require `vendor/autoload.php`
 in your application's bootstrap file.
 
-## Examples
+## Usage examples
 
-Value      | `to_int()` | `to_float()` | `to_string()`
----------- | ---------- | ------------ | -------------
-`null`     | fail       | fail         | fail
-`true`     | fail       | fail         | fail
-`false`    | fail       | fail         | fail
-`array`    | fail       | fail         | fail
-resource   | fail       | fail         | fail
-`stdClass` | fail       | fail         | fail
-"10"       | 10         | 10.0         | "10"
-"+10"      | 10         | 10.0         | "+10"
-"-10"      | -10        | -10.0        | "-10"
-10.0       | 10         | 10.0         | "10"
-"10.0"     | fail       | 10.0         | "10.0"
-1.5        | fail       | 1.5          | "1.5"
-"1.5"      | fail       | 1.5          | "1.5"
-"31e+7"    | fail       | 310000000.0  | "31e+7"
-"75e-5"    | fail       | 0.00075      | "75e-5"
-`INF`      | fail       | `INF`        | "INF"
-`NAN`      | fail       | `NAN`        | "NAN"
-""         | fail       | fail         | ""
-"   10   " | fail       | fail         | "   10   "
-"10abc"    | fail       | fail         | "10abc"
-"abc10"    | fail       | fail         | "abc10"
-"010"      | fail       | fail         | "010"
-
-### Support for `__toString()`
+### Input validation
 
 ```php
-class NotStringable {}
-class Stringable {
-    public function __toString() {
-        return "foobar";
+function validatePriceBreakReq(array $data)
+{
+    if (!isset($data['quantity'], $data['price'])) {
+        throw new Exception('quantity and price are required');
+    } elseif (!int_castable($data['quantity'])) {
+        throw new Exception('quantity must be an integer');
+    } elseif (!float_castable($data['price'])) {
+        throw new Exception('price must be a number');
     }
 }
 
-to_string(new NotStringable()); // fail
-to_string(new Stringable());    // "foobar"
+function addPriceBreak(int $itemId, int $quantity, float $price)
+{
+    // insert price break into database
+}
+
+// route handler
+$app->post('/items/:id/pricebreaks/', function (int $id) use($app) {
+    $data = $app->request->getBody();
+    validatePriceBreakReq($data);
+    addPriceBreak($id, (int) $data['quantity'], (float) $data['price']);
+});
+```
+
+### Safe type conversion
+
+```php
+try {
+    $totalRevenue = 0;
+    $totalTransactions = 0;
+
+    foreach ($csvRows as $row) {
+        $totalRevenue += to_float($row['monthly_revenue']);
+        $totalTransactions += to_int($row['monthly_transactions']);
+    }
+
+    // do something with totals
+} catch (CastException $e) {
+    echo "Error: " . $e->getMessage();
+    var_dump($e->getTrace());
+}
 ```
 
 ## Author
