@@ -63,6 +63,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
             ["010"],
             ["10abc"],
             ["abc10"],
+            ["10 "],
             ["   100    "],
             ["\n\t\v\r\f   78 \n \t\v\r\f   \n"],
             ["\n\t\v\r\f78"],

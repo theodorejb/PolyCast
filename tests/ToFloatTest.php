@@ -77,6 +77,7 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
             ["010"],
             ["10abc"],
             ["abc10"],
+            ["10 "], // FILTER_VALIDATE_FLOAT accepts this
             ["   100    "],
             ["\n\t\v\r\f   78 \n \t\v\r\f   \n"],
             ["\n\t\v\r\f78"],

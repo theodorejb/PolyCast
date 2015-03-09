@@ -26,9 +26,7 @@ function to_int($val)
         }
     };
 
-    $type = gettype($val);
-
-    switch ($type) {
+    switch (gettype($val)) {
         case "integer":
             return $val;
         case "double":
@@ -60,9 +58,7 @@ function to_int($val)
  */
 function to_float($val)
 {
-    $type = gettype($val);
-
-    switch ($type) {
+    switch (gettype($val)) {
         case "double":
             return $val;
         case "integer":
@@ -70,26 +66,26 @@ function to_float($val)
         case "string":
             if ($val === "0") {
                 return 0.0; // special-case zero
-            }
-
-            if ($val === "") {
+            } elseif ($val !== "" && $val[0] === "0") {
+                // reject leading zeros
                 throw new CastException("Value could not be converted to float");
             }
 
-            $c = $val[0]; // get the first character of the string
+            // Use regular expressions since FILTER_VALIDATE_FLOAT allows trailing whitespace
+            // Based on http://php.net/manual/en/language.types.float.php
+            $lnum    = "[0-9]+";
+            $dnum    = "([0-9]*[\.]{$lnum})|({$lnum}[\.][0-9]*)";
+            $expDnum = "/^[+-]?(({$lnum}|{$dnum})[eE][+-]?{$lnum})$/";
 
-            if (!("1" <= $c && $c <= "9") && $c !== "-" && $c !== "+") {
-                // reject leading whitespace and zeros
+            if (
+                !preg_match("/^[+-]?{$lnum}$/", $val) &&
+                !preg_match("/^[+-]?{$dnum}$/", $val) &&
+                !preg_match($expDnum, $val)
+            ) {
                 throw new CastException("Value could not be converted to float");
             }
 
-            $float = filter_var($val, FILTER_VALIDATE_FLOAT);
-
-            if ($float === false) {
-                throw new CastException("Value could not be converted to float");
-            }
-
-            return $float;
+            return (float) $val;
         default:
             throw new CastException("Value could not be converted to float");
     }
@@ -103,9 +99,7 @@ function to_float($val)
  */
 function to_string($val)
 {
-    $type = gettype($val);
-
-    switch ($type) {
+    switch (gettype($val)) {
         case "string":
             return $val;
         case "integer":
