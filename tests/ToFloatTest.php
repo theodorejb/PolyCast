@@ -18,12 +18,12 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
             [1.5, "1.5"],
             [0.00075, "75e-5"],
             [310000000.0, "31e+7"],
-            [(float) PHP_INT_MAX, (string) PHP_INT_MAX],
-            [(float) PHP_INT_MAX, PHP_INT_MAX],
-            [(float) PHP_INT_MAX, (float) PHP_INT_MAX],
-            [(float) PHP_INT_MIN, (string) PHP_INT_MIN],
-            [(float) PHP_INT_MIN, PHP_INT_MIN],
-            [(float) PHP_INT_MIN, (float) PHP_INT_MIN],
+            [(float)PHP_INT_MAX, (string)PHP_INT_MAX],
+            [(float)PHP_INT_MAX, PHP_INT_MAX],
+            [(float)PHP_INT_MAX, (float)PHP_INT_MAX],
+            [(float)PHP_INT_MIN, (string)PHP_INT_MIN],
+            [(float)PHP_INT_MIN, PHP_INT_MIN],
+            [(float)PHP_INT_MIN, (float)PHP_INT_MIN],
         ];
     }
 
@@ -41,10 +41,10 @@ class ToFloatTest extends PHPUnit_Framework_TestCase
         $this->assertSame(INF, to_float(INF));
         $this->assertSame(-INF, to_float(-INF));
         $this->assertTrue(is_nan(to_float(NAN)));
-        $this->assertSame((float) (PHP_INT_MAX * 2), to_float(PHP_INT_MAX * 2));
-        $this->assertSame((float) (PHP_INT_MIN * 2), to_float(PHP_INT_MIN * 2));
-        $this->assertSame((string) (float) (PHP_INT_MAX * 2), (string) to_float((string) (PHP_INT_MAX * 2)));
-        $this->assertSame((string) (float) (PHP_INT_MIN * 2), (string) to_float((string) (PHP_INT_MIN * 2)));
+        $this->assertSame((float)(PHP_INT_MAX * 2), to_float(PHP_INT_MAX * 2));
+        $this->assertSame((float)(PHP_INT_MIN * 2), to_float(PHP_INT_MIN * 2));
+        $this->assertSame((string)(float)(PHP_INT_MAX * 2), (string)to_float((string)(PHP_INT_MAX * 2)));
+        $this->assertSame((string)(float)(PHP_INT_MIN * 2), (string)to_float((string)(PHP_INT_MIN * 2)));
     }
 
     public function disallowedTypes()

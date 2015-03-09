@@ -13,9 +13,9 @@ class ToIntTest extends PHPUnit_Framework_TestCase
             [-10, "-10"],
             [10, 10],
             [10, 10.0],
-            [PHP_INT_MAX, (string) PHP_INT_MAX],
+            [PHP_INT_MAX, (string)PHP_INT_MAX],
             [PHP_INT_MAX, PHP_INT_MAX],
-            [PHP_INT_MIN, (string) PHP_INT_MIN],
+            [PHP_INT_MIN, (string)PHP_INT_MIN],
             [PHP_INT_MIN, PHP_INT_MIN],
         ];
     }
@@ -106,8 +106,8 @@ class ToIntTest extends PHPUnit_Framework_TestCase
             [-INF],
             [PHP_INT_MAX * 2],
             [PHP_INT_MIN * 2],
-            [(string) PHP_INT_MAX * 2],
-            [(string) PHP_INT_MIN * 2],
+            [(string)(PHP_INT_MAX * 2)],
+            [(string)(PHP_INT_MIN * 2)],
         ];
     }
 

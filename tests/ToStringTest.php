@@ -31,8 +31,8 @@ class ToStringTest extends PHPUnit_Framework_TestCase
             [null],
             [true],
             [false],
-            [[]],
             [fopen("data:text/html,foobar", "r")],
+            [[]],
         ];
     }
 
