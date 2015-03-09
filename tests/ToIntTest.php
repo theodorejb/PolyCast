@@ -25,7 +25,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
      */
     public function testShouldPass($expected, $val)
     {
-        $this->assertSame($expected, try_int($val));
+        $this->assertTrue(int_castable($val));
         $this->assertSame($expected, to_int($val));
     }
 
@@ -47,7 +47,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
      */
     public function testDisallowedTypes($val)
     {
-        $this->assertNull(try_int($val));
+        $this->assertFalse(int_castable($val));
         to_int($val);
     }
 
@@ -77,7 +77,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidFormats($val)
     {
-        $this->assertNull(try_int($val));
+        $this->assertFalse(int_castable($val));
         to_int($val);
     }
 
@@ -95,7 +95,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
      */
     public function testUnsafeValues($val)
     {
-        $this->assertNull(try_int($val));
+        $this->assertFalse(int_castable($val));
         to_int($val);
     }
 
@@ -117,7 +117,7 @@ class ToIntTest extends PHPUnit_Framework_TestCase
      */
     public function testOverflowValues($val)
     {
-        $this->assertNull(try_int($val));
+        $this->assertFalse(int_castable($val));
         to_int($val);
     }
 }
