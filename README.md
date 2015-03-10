@@ -7,11 +7,11 @@ The functions return true if a value can be cast to the designated type without
 data loss, and false if it cannot.
 
 Three complementary functions are also included: `to_int`, `to_float`, and
-`to_string`. These functions cast and return a value if it can be converted
-without data loss, and throw a `CastException` if it cannot.
+`to_string`. These functions cast and return a value if the corresponding
+*_castable* function returns true, and throw a `CastException` if it returns false.
 
 This library was originally based on the [Safe Casting Functions RFC](https://wiki.php.net/rfc/safe_cast)
-proposed (but ultimately rejected) for PHP 7.
+proposed (but ultimately declined) for PHP 7.
 
 ## Acceptable casts
 
@@ -81,7 +81,7 @@ function addPriceBreak(int $itemId, int $quantity, float $price)
 $app->post('/items/:id/pricebreaks/', function (int $id) use($app) {
     $data = $app->request->getBody();
     validatePriceBreakReq($data);
-    addPriceBreak($id, (int) $data['quantity'], (float) $data['price']);
+    addPriceBreak($id, (int)$data['quantity'], (float)$data['price']);
 });
 ```
 
