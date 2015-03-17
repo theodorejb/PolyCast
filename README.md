@@ -80,10 +80,10 @@ function addPriceBreak(int $itemId, int $quantity, float $price)
 }
 
 // route handler
-$app->post('/items/:id/pricebreaks/', function (int $id) use($app) {
+$app->post('/items/:id/pricebreaks/', function ($id) use($app) {
     $data = $app->request->getBody();
     validatePriceBreakReq($data);
-    addPriceBreak($id, (int)$data['quantity'], (float)$data['price']);
+    addPriceBreak((int)$id, (int)$data['quantity'], (float)$data['price']);
 });
 ```
 
