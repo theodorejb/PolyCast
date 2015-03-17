@@ -12,6 +12,6 @@
         "phpunit/phpunit": "~4.5"
     },
     "autoload": {
-        "files": ["lib/PolyCast.php"]
+        "files": ["lib/PolyCast.php", "lib/CastException.php"]
     }
 }

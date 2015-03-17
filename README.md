@@ -36,9 +36,9 @@ matching the format described at http://php.net/manual/en/language.types.float.p
 * Floats
 * Objects with a `__toString` method
 
-The functions will always return false if passed `null`, `true` or `false`,
-an array, resource, or object (with the exception of objects with a `__toString`
-method passed to `string_castable`).
+The *_castable* functions will always return false if passed `null`, `true` or
+`false`, an array, resource, or object (with the exception of objects with a
+`__toString` method passed to `string_castable`).
 
 ## Installation
 
@@ -48,7 +48,7 @@ add the following to the composer.json file in your project root:
 ```json
 {
     "require": {
-        "theodorejb/polycast": "~0.7"
+        "theodorejb/polycast": "~0.8"
     }
 }
 ```
@@ -61,6 +61,8 @@ in your application's bootstrap file.
 ### Input validation
 
 ```php
+use function theodorejb\polycast\{ int_castable, float_castable };
+
 function validatePriceBreakReq(array $data)
 {
     if (!isset($data['quantity'], $data['price'])) {
@@ -88,17 +90,19 @@ $app->post('/items/:id/pricebreaks/', function (int $id) use($app) {
 ### Safe type conversion
 
 ```php
+use theodorejb\polycast;
+
 try {
     $totalRevenue = 0;
     $totalTransactions = 0;
 
     foreach ($csvRows as $row) {
-        $totalRevenue += to_float($row['monthly_revenue']);
-        $totalTransactions += to_int($row['monthly_transactions']);
+        $totalRevenue += polycast\to_float($row['monthly_revenue']);
+        $totalTransactions += polycast\to_int($row['monthly_transactions']);
     }
 
     // do something with totals
-} catch (CastException $e) {
+} catch (polycast\CastException $e) {
     echo "Error: " . $e->getMessage();
     var_dump($e->getTrace());
 }

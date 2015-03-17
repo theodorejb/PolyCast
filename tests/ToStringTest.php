@@ -1,6 +1,8 @@
 <?php
 
-class ToStringTest extends PHPUnit_Framework_TestCase
+namespace theodorejb\polycast;
+
+class ToStringTest extends \PHPUnit_Framework_TestCase
 {
     public function shouldPass()
     {
@@ -38,7 +40,7 @@ class ToStringTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider disallowedTypes
-     * @expectedException CastException
+     * @expectedException theodorejb\polycast\CastException
      */
     public function testDisallowedTypes($val)
     {
@@ -49,14 +51,14 @@ class ToStringTest extends PHPUnit_Framework_TestCase
     public function invalidObjects()
     {
         return [
-            [new stdClass()],
+            [new \stdClass()],
             [new NotStringable()],
         ];
     }
 
     /**
      * @dataProvider invalidObjects
-     * @expectedException CastException
+     * @expectedException theodorejb\polycast\CastException
      */
     public function testInvalidObjects($val)
     {

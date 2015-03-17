@@ -1,13 +1,11 @@
 <?php
 
+namespace theodorejb\polycast;
+
 // conditionally define PHP_INT_MIN since PHP 5.x doesn't
 // include it and it's necessary for validating integers.
 if (!defined("PHP_INT_MIN")) {
     define("PHP_INT_MIN", ~PHP_INT_MAX);
-}
-
-if (!class_exists("CastException")) {
-    require "CastException.php";
 }
 
 /**
