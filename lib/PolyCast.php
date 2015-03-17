@@ -13,7 +13,7 @@ if (!defined("PHP_INT_MIN")) {
  * @param mixed $val
  * @return bool
  */
-function int_castable($val)
+function safe_int($val)
 {
     switch (gettype($val)) {
         case "integer":
@@ -38,7 +38,7 @@ function int_castable($val)
  * @param mixed $val
  * @return bool
  */
-function float_castable($val)
+function safe_float($val)
 {
     switch (gettype($val)) {
         case "double":
@@ -69,7 +69,7 @@ function float_castable($val)
  * @param mixed $val
  * @return bool
  */
-function string_castable($val)
+function safe_string($val)
 {
     switch (gettype($val)) {
         case "string":
@@ -91,7 +91,7 @@ function string_castable($val)
  */
 function to_int($val)
 {
-    if (!int_castable($val)) {
+    if (!safe_int($val)) {
         throw new CastException("Value could not be converted to int");
     } else {
         return (int)$val;
@@ -106,7 +106,7 @@ function to_int($val)
  */
 function to_float($val)
 {
-    if (!float_castable($val)) {
+    if (!safe_float($val)) {
         throw new CastException("Value could not be converted to float");
     } else {
         return (float)$val;
@@ -121,7 +121,7 @@ function to_float($val)
  */
 function to_string($val)
 {
-    if (!string_castable($val)) {
+    if (!safe_string($val)) {
         throw new CastException("Value could not be converted to string");
     } else {
         return (string)$val;

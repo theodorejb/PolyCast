@@ -23,7 +23,7 @@ class ToStringTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldPass($expected, $val)
     {
-        $this->assertTrue(string_castable($val));
+        $this->assertTrue(safe_string($val));
         $this->assertSame($expected, to_string($val));
     }
 
@@ -44,7 +44,7 @@ class ToStringTest extends \PHPUnit_Framework_TestCase
      */
     public function testDisallowedTypes($val)
     {
-        $this->assertFalse(string_castable($val));
+        $this->assertFalse(safe_string($val));
         to_string($val);
     }
 
@@ -62,7 +62,7 @@ class ToStringTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidObjects($val)
     {
-        $this->assertFalse(string_castable($val));
+        $this->assertFalse(safe_string($val));
         to_string($val);
     }
 }

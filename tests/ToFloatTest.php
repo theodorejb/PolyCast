@@ -34,7 +34,7 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldPass($expected, $val)
     {
-        $this->assertTrue(float_castable($val));
+        $this->assertTrue(safe_float($val));
         $this->assertSame($expected, to_float($val));
     }
 
@@ -67,7 +67,7 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
      */
     public function testDisallowedTypes($val)
     {
-        $this->assertFalse(float_castable($val));
+        $this->assertFalse(safe_float($val));
         to_float($val);
     }
 
@@ -93,7 +93,7 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidFormats($val)
     {
-        $this->assertFalse(float_castable($val));
+        $this->assertFalse(safe_float($val));
         to_float($val);
     }
 }
