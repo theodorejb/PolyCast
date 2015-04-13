@@ -61,30 +61,26 @@ in your application's bootstrap file.
 ### Input validation
 
 ```php
-use function theodorejb\polycast\{ safe_int, safe_float };
+use function theodorejb\polycast\{ safe_int, safe_float, safe_string };
 
-function validatePriceBreakReq(array $data)
-{
-    if (!isset($data['quantity'], $data['price'])) {
-        throw new Exception('quantity and price are required');
-    } elseif (!safe_int($data['quantity'])) {
-        throw new Exception('quantity must be an integer');
-    } elseif (!safe_float($data['price'])) {
-        throw new Exception('price must be a number');
-    }
+$name     = $_POST['name'];
+$quantity = $_POST['quantity'];
+$price    = $_POST['price'];
+
+if (!safe_string($name)) {
+    echo 'Name must be a string';
+} elseif (!safe_int($quantity)) {
+    echo 'Quantity must be an integer';
+} elseif (!safe_float($price)) {
+    echo 'Price must be a number';
+} else {
+    addProduct($name, (int)$quantity, (float)$price);
 }
 
-function addPriceBreak(int $itemId, int $quantity, float $price)
+function addProduct(string $name, int $quantity, float $price)
 {
-    // insert price break into database
+    // ... a database query would go here
 }
-
-// route handler
-$app->post('/items/:id/pricebreaks/', function ($id) use($app) {
-    $data = $app->request->getBody();
-    validatePriceBreakReq($data);
-    addPriceBreak((int)$id, (int)$data['quantity'], (float)$data['price']);
-});
 ```
 
 ### Safe type conversion
@@ -93,7 +89,7 @@ $app->post('/items/:id/pricebreaks/', function ($id) use($app) {
 use theodorejb\polycast;
 
 try {
-    $totalRevenue = 0;
+    $totalRevenue = 0.0;
     $totalTransactions = 0;
 
     foreach ($csvRows as $row) {
