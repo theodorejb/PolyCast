@@ -56,6 +56,7 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
             [true],
             [false],
             [new \stdClass()],
+            [new NotAFloat()], // FILTER_VALIDATE_FLOAT accepts this
             [fopen("data:text/html,foobar", "r")],
             [[]],
         ];
@@ -79,8 +80,7 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
             ["010"],
             ["10abc"],
             ["abc10"],
-            ["10 "], // FILTER_VALIDATE_FLOAT accepts this
-            ["   100    "],
+            ["   100    "], // FILTER_VALIDATE_FLOAT accepts this
             ["\n\t\v\r\f   78 \n \t\v\r\f   \n"],
             ["\n\t\v\r\f78"],
             ["78\n\t\v\r\f"],
@@ -95,5 +95,13 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse(safe_float($val));
         to_float($val);
+    }
+}
+
+class NotAFloat
+{
+    function __toString()
+    {
+        return "1.0";
     }
 }

@@ -38,6 +38,7 @@ class ToIntTest extends \PHPUnit_Framework_TestCase
             [true],
             [false],
             [new \stdClass()],
+            [new NotAnInt()], // FILTER_VALIDATE_INT accepts this
             [fopen("data:text/html,foobar", "r")],
             [[]],
         ];
@@ -65,8 +66,7 @@ class ToIntTest extends \PHPUnit_Framework_TestCase
             ["010"],
             ["10abc"],
             ["abc10"],
-            ["10 "],
-            ["   100    "],
+            ["   100    "], // FILTER_VALIDATE_INT accepts this
             ["\n\t\v\r\f   78 \n \t\v\r\f   \n"],
             ["\n\t\v\r\f78"],
             ["78\n\t\v\r\f"],
@@ -86,6 +86,7 @@ class ToIntTest extends \PHPUnit_Framework_TestCase
     public function unsafeValues()
     {
         return [
+            [1.000000000000001], // FILTER_VALIDATE_INT accepts this
             [NAN],
             [1.5],
         ];
@@ -121,5 +122,13 @@ class ToIntTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse(safe_int($val));
         to_int($val);
+    }
+}
+
+class NotAnInt
+{
+    function __toString()
+    {
+        return "1";
     }
 }
