@@ -40,21 +40,9 @@ The *safe_* functions will always return false if passed `null`, `true` or
 `false`, an array, resource, or object (with the exception of objects with a
 `__toString` method passed to `safe_string`).
 
-## Installation
+## Install via Composer
 
-To install via [Composer](https://getcomposer.org/),
-add the following to the composer.json file in your project root:
-
-```json
-{
-    "require": {
-        "theodorejb/polycast": "~0.9"
-    }
-}
-```
-
-Then run `composer install` and require `vendor/autoload.php`
-in your application's bootstrap file.
+`composer require theodorejb/polycast`
 
 ## Usage examples
 
