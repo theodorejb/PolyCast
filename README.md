@@ -26,8 +26,8 @@ containing the digits 0-9 with a value between `PHP_INT_MIN` and `PHP_INT_MAX`.
 
 * Floats
 * Integers
-* Strings with an optional positive/negative sign, without leading zeros, and
-matching the format described at http://php.net/manual/en/language.types.float.php.
+* Strings with an optional positive/negative sign matching the format described
+at http://php.net/manual/en/language.types.float.php.
 
 ### `safe_string`
 
