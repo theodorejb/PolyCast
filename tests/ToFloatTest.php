@@ -9,6 +9,7 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
         return [
             [0.0, "0"],
             [0.0, 0],
+            [0.0, "0.0"],
             [0.0, 0.0],
             [10.0, "10"],
             [10.0, "+10"],

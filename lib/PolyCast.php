@@ -45,8 +45,9 @@ function safe_float($val)
         case "integer":
             return true;
         case "string":
-            if ($val !== "" && $val !== "0" && $val[0] === "0") {
-                return false; // reject leading zeros
+            // reject leading zeros unless they are followed by a decimal point
+            if (strlen($val) > 1 && $val[0] === "0" && $val[1] !== ".") {
+                return false;
             }
 
             // Use regular expressions since FILTER_VALIDATE_FLOAT allows trailing whitespace
