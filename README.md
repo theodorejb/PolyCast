@@ -51,18 +51,14 @@ The *safe_* functions will always return false if passed `null`, `true` or
 ```php
 use function theodorejb\polycast\{ safe_int, safe_float, safe_string };
 
-$name     = $_POST['name'];
-$quantity = $_POST['quantity'];
-$price    = $_POST['price'];
-
-if (!safe_string($name)) {
+if (!safe_string($_POST['name'])) {
     echo 'Name must be a string';
-} elseif (!safe_int($quantity)) {
+} elseif (!safe_int($_POST['quantity'])) {
     echo 'Quantity must be an integer';
-} elseif (!safe_float($price)) {
+} elseif (!safe_float($_POST['price'])) {
     echo 'Price must be a number';
 } else {
-    addProduct($name, (int)$quantity, (float)$price);
+    addProduct($_POST['name'], (int)$_POST['quantity'], (float)$_POST['price']);
 }
 
 function addProduct(string $name, int $quantity, float $price)
