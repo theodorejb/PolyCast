@@ -11,7 +11,8 @@ Three complementary functions are also included: `to_int`, `to_float`, and
 *safe_* function returns true, and throw a `CastException` if it returns false.
 
 This library was originally based on the [Safe Casting Functions RFC](https://wiki.php.net/rfc/safe_cast)
-proposed (but ultimately declined) for PHP 7.
+proposed (but ultimately declined) for PHP 7. For additional background info see
+[PolyCast: a library for safe type conversion in PHP](http://blog.theodorejb.me/polycast/).
 
 ## Acceptable casts
 
