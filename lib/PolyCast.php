@@ -45,21 +45,7 @@ function safe_float($val)
         case "integer":
             return true;
         case "string":
-            // reject leading zeros unless they are followed by a decimal point
-            if (strlen($val) > 1 && $val[0] === "0" && $val[1] !== ".") {
-                return false;
-            }
-
-            // Use regular expressions since FILTER_VALIDATE_FLOAT allows trailing whitespace
-            // Based on http://php.net/manual/en/language.types.float.php
-            $lnum    = "[0-9]+";
-            $dnum    = "([0-9]*[\.]{$lnum})|({$lnum}[\.][0-9]*)";
-            $expDnum = "/^[+-]?(({$lnum}|{$dnum})[eE][+-]?{$lnum})$/";
-
-            return
-                preg_match("/^[+-]?{$lnum}$/", $val) ||
-                preg_match("/^[+-]?{$dnum}$/", $val) ||
-                preg_match($expDnum, $val);
+            return $val===trim($val) && false!==filter_var($val,FILTER_VALIDATE_FLOAT);
         default:
             return false;
     }
