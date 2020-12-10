@@ -1,7 +1,5 @@
 # PolyCast
 
-[![Build Status](https://travis-ci.org/theodorejb/PolyCast.svg?branch=master)](https://travis-ci.org/theodorejb/PolyCast) [![Packagist Version](https://img.shields.io/packagist/v/theodorejb/polycast.svg)](https://packagist.org/packages/theodorejb/polycast) [![License](https://img.shields.io/packagist/l/theodorejb/polycast.svg)](LICENSE.md)
-
 Provides `safe_int`, `safe_float`, and `safe_string` functions.
 The functions return true if a value can be cast to the designated type without
 data loss, and false if it cannot.
@@ -12,7 +10,7 @@ Three complementary functions are also included: `to_int`, `to_float`, and
 
 This library was originally based on the [Safe Casting Functions RFC](https://wiki.php.net/rfc/safe_cast)
 proposed (but ultimately declined) for PHP 7. For additional background info see
-[PolyCast: a library for safe type conversion in PHP](http://blog.theodorejb.me/polycast/).
+[PolyCast: a library for safe type conversion in PHP](https://theodorejb.me/2015/10/25/polycast/).
 
 ## Acceptable casts
 
@@ -28,7 +26,7 @@ containing the digits 0-9 with a value between `PHP_INT_MIN` and `PHP_INT_MAX`.
 * Floats
 * Integers
 * Strings with an optional positive/negative sign matching the format described
-at http://php.net/manual/en/language.types.float.php.
+at https://php.net/manual/en/language.types.float.php.
 
 ### `safe_string`
 
@@ -92,7 +90,7 @@ try {
 ## Author
 
 Theodore Brown  
-<http://theodorejb.me>
+<https://theodorejb.me>
 
 ## License
 

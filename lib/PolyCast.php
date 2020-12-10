@@ -1,19 +1,14 @@
 <?php
 
-namespace theodorejb\polycast;
+declare(strict_types=1);
 
-// conditionally define PHP_INT_MIN since PHP 5.x doesn't
-// include it and it's necessary for validating integers.
-if (!defined("PHP_INT_MIN")) {
-    define("PHP_INT_MIN", ~PHP_INT_MAX);
-}
+namespace theodorejb\polycast;
 
 /**
  * Returns true if the value can be safely converted to an integer
  * @param mixed $val
- * @return bool
  */
-function safe_int($val)
+function safe_int($val): bool
 {
     switch (gettype($val)) {
         case "integer":
@@ -36,9 +31,8 @@ function safe_int($val)
 /**
  * Returns true if the value can be safely converted to a float
  * @param mixed $val
- * @return bool
  */
-function safe_float($val)
+function safe_float($val): bool
 {
     switch (gettype($val)) {
         case "double":
@@ -68,9 +62,8 @@ function safe_float($val)
 /**
  * Returns true if the value can be safely converted to a string
  * @param mixed $val
- * @return bool
  */
-function safe_string($val)
+function safe_string($val): bool
 {
     switch (gettype($val)) {
         case "string":
@@ -87,10 +80,9 @@ function safe_string($val)
 /**
  * Returns the value as an integer
  * @param mixed $val
- * @return int
  * @throws CastException if the value cannot be safely cast to an integer
  */
-function to_int($val)
+function to_int($val): int
 {
     if (!safe_int($val)) {
         throw new CastException("Value could not be converted to int");
@@ -102,10 +94,9 @@ function to_int($val)
 /**
  * Returns the value as a float
  * @param mixed $val
- * @return float
  * @throws CastException if the value cannot be safely cast to a float
  */
-function to_float($val)
+function to_float($val): float
 {
     if (!safe_float($val)) {
         throw new CastException("Value could not be converted to float");
@@ -117,10 +108,9 @@ function to_float($val)
 /**
  * Returns the value as a string
  * @param mixed $val
- * @return string
  * @throws CastException if the value cannot be safely cast to a string
  */
-function to_string($val)
+function to_string($val): string
 {
     if (!safe_string($val)) {
         throw new CastException("Value could not be converted to string");

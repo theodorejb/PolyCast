@@ -8,10 +8,18 @@
             "email": "theodorejb@outlook.com"
         }
     ],
+    "require": {
+        "php": ">=7"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^8"
     },
     "autoload": {
-        "files": ["lib/PolyCast.php", "lib/CastException.php"]
+        "psr-4": {
+            "theodorejb\\polycast\\": "lib/"
+        },
+        "files": [
+            "lib/PolyCast.php"
+        ]
     }
 }

@@ -2,7 +2,9 @@
 
 namespace theodorejb\polycast;
 
-class ToFloatTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ToFloatTest extends TestCase
 {
     public function shouldPass()
     {
@@ -65,11 +67,11 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider disallowedTypes
-     * @expectedException theodorejb\polycast\CastException
      */
     public function testDisallowedTypes($val)
     {
         $this->assertFalse(safe_float($val));
+        $this->expectException(CastException::class);
         to_float($val);
     }
 
@@ -90,11 +92,11 @@ class ToFloatTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidFormats
-     * @expectedException theodorejb\polycast\CastException
      */
     public function testInvalidFormats($val)
     {
         $this->assertFalse(safe_float($val));
+        $this->expectException(CastException::class);
         to_float($val);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace theodorejb\polycast;
 
-class ToIntTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ToIntTest extends TestCase
 {
     public function shouldPass()
     {
@@ -46,11 +48,11 @@ class ToIntTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider disallowedTypes
-     * @expectedException theodorejb\polycast\CastException
      */
     public function testDisallowedTypes($val)
     {
         $this->assertFalse(safe_int($val));
+        $this->expectException(CastException::class);
         to_int($val);
     }
 
@@ -75,11 +77,11 @@ class ToIntTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidFormats
-     * @expectedException theodorejb\polycast\CastException
      */
     public function testInvalidFormats($val)
     {
         $this->assertFalse(safe_int($val));
+        $this->expectException(CastException::class);
         to_int($val);
     }
 
@@ -94,11 +96,11 @@ class ToIntTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider unsafeValues
-     * @expectedException theodorejb\polycast\CastException
      */
     public function testUnsafeValues($val)
     {
         $this->assertFalse(safe_int($val));
+        $this->expectException(CastException::class);
         to_int($val);
     }
 
@@ -116,11 +118,11 @@ class ToIntTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider overflowValues
-     * @expectedException theodorejb\polycast\CastException
      */
     public function testOverflowValues($val)
     {
         $this->assertFalse(safe_int($val));
+        $this->expectException(CastException::class);
         to_int($val);
     }
 }
