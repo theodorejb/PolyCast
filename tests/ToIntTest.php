@@ -6,7 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class ToIntTest extends TestCase
 {
-    public function shouldPass()
+    /**
+     * @return list<array{0: int, 1: int|float|string}>
+     */
+    public function shouldPass(): array
     {
         return [
             [0, "0"],
@@ -26,14 +29,18 @@ class ToIntTest extends TestCase
 
     /**
      * @dataProvider shouldPass
+     * @param mixed $val
      */
-    public function testShouldPass($expected, $val)
+    public function testShouldPass(int $expected, $val): void
     {
         $this->assertTrue(safe_int($val));
         $this->assertSame($expected, to_int($val));
     }
 
-    public function disallowedTypes()
+    /**
+     * @return list<array{0: mixed}>
+     */
+    public function disallowedTypes(): array
     {
         return [
             [null],
@@ -48,15 +55,19 @@ class ToIntTest extends TestCase
 
     /**
      * @dataProvider disallowedTypes
+     * @param mixed $val
      */
-    public function testDisallowedTypes($val)
+    public function testDisallowedTypes($val): void
     {
         $this->assertFalse(safe_int($val));
         $this->expectException(CastException::class);
         to_int($val);
     }
 
-    public function invalidFormats()
+    /**
+     * @return list<array{0: string}>
+     */
+    public function invalidFormats(): array
     {
         return [
             [""],
@@ -78,14 +89,17 @@ class ToIntTest extends TestCase
     /**
      * @dataProvider invalidFormats
      */
-    public function testInvalidFormats($val)
+    public function testInvalidFormats(string $val): void
     {
         $this->assertFalse(safe_int($val));
         $this->expectException(CastException::class);
         to_int($val);
     }
 
-    public function unsafeValues()
+    /**
+     * @return list<array{0: float}>
+     */
+    public function unsafeValues(): array
     {
         return [
             [1.000000000000001], // FILTER_VALIDATE_INT accepts this
@@ -97,14 +111,17 @@ class ToIntTest extends TestCase
     /**
      * @dataProvider unsafeValues
      */
-    public function testUnsafeValues($val)
+    public function testUnsafeValues(float $val): void
     {
         $this->assertFalse(safe_int($val));
         $this->expectException(CastException::class);
         to_int($val);
     }
 
-    public function overflowValues()
+    /**
+     * @return list<array{0: float|string}>
+     */
+    public function overflowValues(): array
     {
         return [
             [INF],
@@ -118,8 +135,9 @@ class ToIntTest extends TestCase
 
     /**
      * @dataProvider overflowValues
+     * @param float|string $val
      */
-    public function testOverflowValues($val)
+    public function testOverflowValues($val): void
     {
         $this->assertFalse(safe_int($val));
         $this->expectException(CastException::class);
@@ -129,7 +147,7 @@ class ToIntTest extends TestCase
 
 class NotAnInt
 {
-    function __toString()
+    function __toString(): string
     {
         return "1";
     }

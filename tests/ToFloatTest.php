@@ -6,7 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class ToFloatTest extends TestCase
 {
-    public function shouldPass()
+    /**
+     * @return list<array{0: float, 1: int|float|string}>
+     */
+    public function shouldPass(): array
     {
         return [
             [0.0, "0"],
@@ -34,14 +37,15 @@ class ToFloatTest extends TestCase
 
     /**
      * @dataProvider shouldPass
+     * @param mixed $val
      */
-    public function testShouldPass($expected, $val)
+    public function testShouldPass(float $expected, $val): void
     {
         $this->assertTrue(safe_float($val));
         $this->assertSame($expected, to_float($val));
     }
 
-    public function testOverflowNanInf()
+    public function testOverflowNanInf(): void
     {
         $this->assertSame(INF, to_float(INF));
         $this->assertSame(-INF, to_float(-INF));
@@ -52,7 +56,10 @@ class ToFloatTest extends TestCase
         $this->assertSame((string)(float)(PHP_INT_MIN * 2), (string)to_float((string)(PHP_INT_MIN * 2)));
     }
 
-    public function disallowedTypes()
+    /**
+     * @return list<array{0: mixed}>
+     */
+    public function disallowedTypes(): array
     {
         return [
             [null],
@@ -67,15 +74,19 @@ class ToFloatTest extends TestCase
 
     /**
      * @dataProvider disallowedTypes
+     * @param mixed $val
      */
-    public function testDisallowedTypes($val)
+    public function testDisallowedTypes($val): void
     {
         $this->assertFalse(safe_float($val));
         $this->expectException(CastException::class);
         to_float($val);
     }
 
-    public function invalidFormats()
+    /**
+     * @return list<array{0: string}>
+     */
+    public function invalidFormats(): array
     {
         return [
             [""],
@@ -93,7 +104,7 @@ class ToFloatTest extends TestCase
     /**
      * @dataProvider invalidFormats
      */
-    public function testInvalidFormats($val)
+    public function testInvalidFormats(string $val): void
     {
         $this->assertFalse(safe_float($val));
         $this->expectException(CastException::class);
@@ -103,7 +114,7 @@ class ToFloatTest extends TestCase
 
 class NotAFloat
 {
-    function __toString()
+    function __toString(): string
     {
         return "1.0";
     }

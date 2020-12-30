@@ -18,11 +18,14 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer:v2
+          tools: composer:v2, psalm
 
       - name: Setup problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - run: composer install --no-progress --prefer-dist --no-suggest
+
+      - run: psalm --output-format=github
+        if: ${{ matrix.php == '8.0' }}
 
       - run: vendor/bin/phpunit

@@ -6,7 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class ToStringTest extends TestCase
 {
-    public function shouldPass()
+    /**
+     * @return list<array{0: string, 1: mixed}>
+     */
+    public function shouldPass(): array
     {
         return [
             ["foobar", "foobar"],
@@ -22,14 +25,18 @@ class ToStringTest extends TestCase
 
     /**
      * @dataProvider shouldPass
+     * @param mixed $val
      */
-    public function testShouldPass($expected, $val)
+    public function testShouldPass(string $expected, $val): void
     {
         $this->assertTrue(safe_string($val));
         $this->assertSame($expected, to_string($val));
     }
 
-    public function disallowedTypes()
+    /**
+     * @return list<array{0: mixed}>
+     */
+    public function disallowedTypes(): array
     {
         return [
             [null],
@@ -42,15 +49,19 @@ class ToStringTest extends TestCase
 
     /**
      * @dataProvider disallowedTypes
+     * @param mixed $val
      */
-    public function testDisallowedTypes($val)
+    public function testDisallowedTypes($val): void
     {
         $this->assertFalse(safe_string($val));
         $this->expectException(CastException::class);
         to_string($val);
     }
 
-    public function invalidObjects()
+    /**
+     * @return list<array{0: object}>
+     */
+    public function invalidObjects(): array
     {
         return [
             [new \stdClass()],
@@ -60,8 +71,9 @@ class ToStringTest extends TestCase
 
     /**
      * @dataProvider invalidObjects
+     * @param object $val
      */
-    public function testInvalidObjects($val)
+    public function testInvalidObjects($val): void
     {
         $this->assertFalse(safe_string($val));
         $this->expectException(CastException::class);
@@ -73,7 +85,7 @@ class NotStringable {}
 
 class Stringable
 {
-    public function __toString()
+    public function __toString(): string
     {
         return "foobar";
     }
